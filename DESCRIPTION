@@ -1,0 +1,16 @@
+Package: MLID
+Type: Package
+Title: Multilevel Index of Dissimilarity
+Version: 0.0.0.9000
+Author: Richard Harris, School of Geographical Sciences, University of Bristol
+Maintainer: Richard Harris <rich.harris@bris.ac.uk>
+Description: Functions for fitting a multilevel index of dissimilarity
+    to geographically hierarchichal data
+URL: https://rpubs.com/profrichharris/211772
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports:
+  lme4
+RoxygenNote: 6.0.0
+Suggests: raster
