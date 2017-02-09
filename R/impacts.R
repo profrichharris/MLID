@@ -1,0 +1,93 @@
+#' Impact calculations
+#'
+#' Calculates the total contribution to the Index of Dissimilarity of neighbourhoods grouped
+#' by regions or other higher-level geographies
+#'
+#' When the Index of Dissimilarity (ID) is estimated as a regression model
+#' the residuals from that model are the differences between the share of population group Y
+#' and the share of population group X that are observed in each neighbourhood. The \code{impacts}
+#' function summaries those differences by higher-level geographies to consider which places or
+#' regions have the neighbourhoods that contribute most to the ID. The measures are useful
+#' for understanding where the seperations of the two population groups are greatest. However, to
+#' look at scale effects, considering the effect of each level \emph{net} of the other levels,
+#' fit a multilevel index using function \code{id}.
+#'
+
+#' @param mydata a \code{data.frame} with \code{ncol(mydata) >= 2}. Each row of the data represents
+#' a neighbourhood or some other areal unit for which counts of population have been made.
+#' @param vars a character or numeric vector of length 2 or 3 giving either the names
+#' or columns positions of the variables in \code{mydata} in the following order
+#' \enumerate{
+#'    \item the number of population group Y in each neighbourhood
+#'    \item the number of population group X in each neighbourhood
+#' }
+#' @param levels a character or numeric vector of minimum length 1 identifying either the names
+#' or columns positions of the variables in \code{mydata} that record to which higher-level grouping
+#' each lower-lower level unit belongs.
+#' @return A list of data.frames, each containing the impact calculations for the higher-level
+#' geographies. The variables are
+#' \itemize{
+#'    \item \code{pcntID} The total contribution of the neighbourhoods within the region to
+#'    the overall ID score, expressed as a percentage
+#'    \item \code{pcntN} The number of neighbourhoods within the region, expressed as a
+#'    percentage of the total number in \code{mydata}
+#'    \item \code{impact} The ratio of \code{pcntID} to \code{pcntN} multiplied by 100. Values
+#'    over 100 indicate a group of neighbourhoods that have a disproportionately high impact
+#'    on the ID.
+#'    \item \code{scldMean} The average difference between the share of the Y population and the
+#'    share of the X population, scaled by the standard error of the differences for the whole
+#'    data set (to give a z-value). Positive values mean that, on average, the region has a greater
+#'    share of the Y population than the X. Negative values mean it has less.
+#'    \item \code{scldSD} A measure of how much the differences between the shares of the
+#'    two populations vary within the region. It is the standard deviation of those differences
+#'    scaled by the standard error for the whole data set. Higher values indicate greater variability
+#'    within the region.
+#' }
+#' @examples
+#' data(ethnicities)
+#' calcs <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
+#' summary(calcs)
+#' summary(calcs, min = 200)
+
+
+impacts <- function(mydata, vars = c(1, 2), levels = NA) {
+
+  if (is.character((vars))) {
+    ifelse (all(vars %in% names(mydata)), vars <- match(vars, names(mydata)),
+            stop("Variable names not found"))
+  }
+
+  if (is.character((levels))) {
+    ifelse (all(levels %in% names(mydata)), levels <- match(levels, names(mydata)),
+            stop("Higher level grouping variable not found"))
+  }
+
+  id <- idx(mydata, vars)
+  rr <- residuals(id)
+  se <- sigma(attr(id, "ols"))
+
+  levels <- as.list(levels)
+  calcs <- lapply(levels, impact.calcs, mydata, rr, se)
+  names(calcs) <- names(mydata[,unlist(levels)])
+  class(calcs) <- "impacts"
+  return(calcs)
+
+}
+
+
+
+impact.calcs <- function(col, mydata, rr, se) {
+
+  t1 <- tapply(abs(rr), mydata[,col], sum) / sum(abs(rr)) * 100
+  t2 <- tapply(abs(rr), mydata[,col], length) / length(rr) * 100
+
+  impact <- t1/t2 * 100
+
+  t3 <- (tapply(rr, mydata[,col], mean) - mean(rr)) / se
+  t4 <- tapply(rr, mydata[,col], sd) / se
+
+  df <- data.frame(pcntID = round(t1,2), pcntN = round(t2,2), impact = round(impact, 0),
+                   scldMean = round(t3,2), scldSD = round(t4,2))
+
+  return(df)
+}

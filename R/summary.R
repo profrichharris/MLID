@@ -25,3 +25,21 @@ summary.index <- function(x, ...) {
   }
 }
 
+
+summary.impacts <- function(x, min = 100, max = NA, ...) {
+
+  lapply(x, show, min = min, max = max)
+
+}
+
+
+show <- function(x, min, max) {
+
+  vv <- x$impact
+  if(is.na(min)) min <- min(vv)
+  if(is.na(max)) max <- max(vv)
+  subset <- vv >= min & vv <= max
+  xx <- x[subset,]
+  xx <- xx[order(xx$impact),]
+
+}
