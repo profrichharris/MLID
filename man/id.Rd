@@ -67,11 +67,10 @@ head(ethnicities)
 
 ## Caculate the standard index value
 id(ethnicities, vars = c("Indian", "WhiteBrit"))
-summary(id(ethnicities, vars = c("Indian", "WhiteBrit")))
 
 ## Calculate also the expected value under randomisation
-summary(id(ethnicities, vars = c("Indian", "WhiteBrit"), expected = T))
-summary(id(ethnicities, vars = c("Indian", "WhiteBrit", "Persons"), expected = T))
+id(ethnicities, vars = c("Indian", "WhiteBrit"), expected = T)
+id(ethnicities, vars = c("Indian", "WhiteBrit", "Persons"), expected = T)
 
 ## The index is fitted as a standard OLS model so we can
 ## extract the standardized residuals and, in this example, look for where the share
@@ -82,9 +81,7 @@ head(ethnicities[resids > 2.58,])
 table(ethnicities$RGN[resids > 2.58])
 
 ## A multilevel model
-index <- id(ethnicities, vars = c("Indian", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
-summary(index)
-index <- id(ethnicities, vars = c("Indian", "WhiteBrit", "Persons"),
+id(ethnicities, vars = c("Indian", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
+id(ethnicities, vars = c("Indian", "WhiteBrit", "Persons"),
 levels=c("LLSOA","MLSOA","LAD","RGN"), expected = T)
-summary(index)
 }

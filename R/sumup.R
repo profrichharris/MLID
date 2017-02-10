@@ -19,15 +19,15 @@
 #' @return a \code{data.frame} containing the aggregated data
 #' @examples
 #' data(ethnicities)
-#' summary(id(ethnicities, vars=c("Arab","Other","Persons"), expected = T))
+#' id(ethnicities, vars=c("Arab","Other","Persons"), expected = T)
 #' # the expected value is very high relative to the ID
 #'
 #' aggdata <- sumup(ethnicities, groupby = "LLSOA", omit = "OA")
-#' summary(id(aggdata, vars=c("Arab","Other","Persons"), expected = T))
+#' id(aggdata, vars=c("Arab","Other","Persons"), expected = T)
 #' # Note the sensitivity of the ID to the scale of analysis
 #'
 #' aggdata <- sumup(ethnicities, groupby = "MLSOA", omit = "LLSOA")
-#' summary(id(aggdata, vars=c("Arab","Other","Persons"), expected = T))
+#' id(aggdata, vars=c("Arab","Other","Persons"), expected = T)
 
 sumup <- function(mydata, groupby, omit = NA) {
 
