@@ -29,7 +29,7 @@
 #' aggdata <- sumup(ethnicities, groupby = "MLSOA", omit = "LLSOA")
 #' summary(id(aggdata, vars=c("Arab","Other","Persons"), expected = T))
 
-sumup <- function(mydata, groupby = NA, omit = NA) {
+sumup <- function(mydata, groupby, omit = NA) {
 
   if (is.character((groupby))) {
     ifelse (all(groupby %in% names(mydata)), groupby <- match(groupby, names(mydata)),

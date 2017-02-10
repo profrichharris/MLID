@@ -4,7 +4,7 @@
 \alias{impacts}
 \title{Impact calculations}
 \usage{
-impacts(mydata, vars = c(1, 2), levels = NA)
+impacts(mydata, vars, levels)
 }
 \arguments{
 \item{mydata}{a \code{data.frame} with \code{ncol(mydata) >= 2}. Each row of the data represents

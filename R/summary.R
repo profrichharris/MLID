@@ -20,6 +20,7 @@ summary.index <- function(x, ...) {
 
 summary.impacts <- function(x, min = 101, max = NA, ...) {
 
+  cat(attr(x, "vars"),"\n")
   lapply(x, shw, min = min, max = max)
 
 }

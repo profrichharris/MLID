@@ -4,7 +4,7 @@
 \alias{sumup}
 \title{Sum the data up into higher level groups}
 \usage{
-sumup(mydata, groupby = NA, omit = NA)
+sumup(mydata, groupby, omit = NA)
 }
 \arguments{
 \item{mydata}{a data.frame with \code{ncol(mydata) >= 2}. Each row of the data represents

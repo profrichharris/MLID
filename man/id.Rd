@@ -4,7 +4,7 @@
 \alias{id}
 \title{(Multilevel) Index of dissimilarity}
 \usage{
-id(mydata, vars = c(1, 2), levels = NA, expected = F, nsims = 100)
+id(mydata, vars, levels = NA, expected = F, nsims = 100)
 }
 \arguments{
 \item{mydata}{a data.frame with \code{ncol(mydata) >= 2}. Each row of the data represents

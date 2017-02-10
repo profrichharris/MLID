@@ -72,7 +72,7 @@
 #' levels=c("LLSOA","MLSOA","LAD","RGN"), expected = T)
 #' summary(index)
 
-id <- function(mydata, vars = c(1, 2), levels = NA, expected = F, nsims = 100) {
+id <- function(mydata, vars, levels = NA, expected = F, nsims = 100) {
   if (is.character((vars))) {
     ifelse (all(vars %in% names(mydata)), vars <- match(vars, names(mydata)),
                                           stop("Variable not found"))

@@ -52,7 +52,7 @@
 #' calcs$RGN
 
 
-impacts <- function(mydata, vars = c(1, 2), levels = NA) {
+impacts <- function(mydata, vars, levels) {
 
   if (is.character((vars))) {
     ifelse (all(vars %in% names(mydata)), vars <- match(vars, names(mydata)),
@@ -70,7 +70,8 @@ impacts <- function(mydata, vars = c(1, 2), levels = NA) {
 
   levels <- as.list(levels)
   calcs <- lapply(levels, impact.calcs, mydata, rr, se)
-  names(calcs) <- names(mydata[,unlist(levels)])
+  names(calcs) <- names(mydata[, unlist(levels)])
+  attr(calcs, "vars") <- paste(names(mydata[, vars]), collapse=" ~ ")
   class(calcs) <- "impacts"
   return(calcs)
 

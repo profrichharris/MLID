@@ -60,7 +60,7 @@ holdback <- function(mlm=NULL, rvals=NULL) {
 
   }
   names(hb) <- colnames(rvals)
-  return(round(hb*100,1))
+  return(round(hb*100,2))
 
 }
 
