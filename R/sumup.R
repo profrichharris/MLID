@@ -1,4 +1,4 @@
-#' Aggregate the data into higher level groups
+#' Sum the data up into higher level groups
 #'
 #' Aggregates the data into higher level groups by calculating the sum
 #' of all the numeric data columns and preserving their links with other
@@ -19,17 +19,17 @@
 #' @return a \code{data.frame} containing the aggregated data
 #' @examples
 #' data(ethnicities)
-#' summary(id(mydata, vars=c("Arab","Other","Persons"), expected = T))
+#' summary(id(ethnicities, vars=c("Arab","Other","Persons"), expected = T))
 #' # the expected value is very high relative to the ID
 #'
-#' aggdata <- aggregate(mydata, groupby = "LLSOA", omit = "OA")
+#' aggdata <- sumup(ethnicities, groupby = "LLSOA", omit = "OA")
 #' summary(id(aggdata, vars=c("Arab","Other","Persons"), expected = T))
 #' # Note the sensitivity of the ID to the scale of analysis
 #'
-#' aggdata <- aggregate(aggdata, groupby = "MLSOA", omit = "LLSOA")
+#' aggdata <- sumup(ethnicities, groupby = "MLSOA", omit = "LLSOA")
 #' summary(id(aggdata, vars=c("Arab","Other","Persons"), expected = T))
 
-aggregate <- function(mydata, groupby = NA, omit = NA) {
+sumup <- function(mydata, groupby = NA, omit = NA) {
 
   if (is.character((groupby))) {
     ifelse (all(groupby %in% names(mydata)), groupby <- match(groupby, names(mydata)),
@@ -37,7 +37,7 @@ aggregate <- function(mydata, groupby = NA, omit = NA) {
   }
   if (is.character((omit))) {
     ifelse (all(omit %in% names(mydata)), omit <- match(omit, names(mydata)),
-            stop("Omission variables not found"))
+            stop("Variables to omit not found"))
   }
 
   cols <- sapply(mydata, is.numeric)

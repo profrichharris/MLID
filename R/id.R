@@ -75,8 +75,9 @@
 id <- function(mydata, vars = c(1, 2), levels = NA, expected = F, nsims = 100) {
   if (is.character((vars))) {
     ifelse (all(vars %in% names(mydata)), vars <- match(vars, names(mydata)),
-                                          stop("Variable names not found"))
+                                          stop("Variable not found"))
   }
+  if (!all(sapply(mydata[, vars], is.numeric))) stop("Variable is not numeric")
   ifelse (!is.na(levels), id <- mid(mydata, vars, levels, expected, nsims),
             id <- idx(mydata, vars, expected, nsims))
   return(id)

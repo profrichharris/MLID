@@ -19,21 +19,21 @@ summary.index <- function(x, ...) {
     v <- attr(x, "holdback")
     txt <- "\nPercentage change in the ID if the contribution of the level is set to zero:\n"
     for(i in 1:length(v)) {
-      txt <- paste(txt, names(v[i]),"\t\t",format(round(v[i], 2), nsmall = 2),"\n",sep="")
+      txt <- paste(txt, names(v[i]),"   ",format(round(v[i], 2), nsmall = 2),"\n",sep="")
     }
     cat(txt)
   }
 }
 
 
-summary.impacts <- function(x, min = 100, max = NA, ...) {
+summary.impacts <- function(x, min = 101, max = NA, ...) {
 
-  lapply(x, show, min = min, max = max)
+  lapply(x, shw, min = min, max = max)
 
 }
 
 
-show <- function(x, min, max) {
+shw <- function(x, min, max) {
 
   vv <- x$impact
   if(is.na(min)) min <- min(vv)

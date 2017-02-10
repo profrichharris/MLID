@@ -47,16 +47,18 @@
 #' data(ethnicities)
 #' calcs <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
 #' summary(calcs)
+#' ## Shows only the places with a greater than expected impact on the ID
 #' summary(calcs, min = 200)
+#' calcs$RGN
 
 
 impacts <- function(mydata, vars = c(1, 2), levels = NA) {
 
   if (is.character((vars))) {
     ifelse (all(vars %in% names(mydata)), vars <- match(vars, names(mydata)),
-            stop("Variable names not found"))
+            stop("Variable not found"))
   }
-
+  if (!all(sapply(mydata[, vars], is.numeric))) stop("Variable is not numeric")
   if (is.character((levels))) {
     ifelse (all(levels %in% names(mydata)), levels <- match(levels, names(mydata)),
             stop("Higher level grouping variable not found"))

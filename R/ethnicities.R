@@ -1,8 +1,21 @@
 #' Population counts by ethnic group
 #'
-#' Say more here
+#' Ethnicity data for England and Wales from the 2011 Census. Each row in the data set gives
+#' population counts for a small area census Output Area (OA). The census geography is hierarchical:
+#' OAs group into Lower Level Super Output Areas (LLSOAs), which group into Middle Level Super
+#' Output Areas (MLSOAs), which group into Local Authority Districts (LADs) and then into
+#' Government Regions (RGNs). These groupings are included in the data.
 #'
-#' @format A data frame with...
+#' @format A \code{data.frame} with 20 columns:
+#' \itemize{
+#'    \item OA, the Census ID for the Output Area
+#'    \item Persons, the residential population count for the OA
+#'    \item columns 3-16, the number of people White British, Irish, of an other White ethnicity,
+#'    of a mixed ethnicity, Indian, Pakistani, Bangladeshi, Chinese, of an other Asian ethnicity,
+#'    Black African, Black Caribbean, of an other Black ethnicity, Arab or of an other ethnicity.
+#'    \item columns 17-20, the ID codes for the higher-level geographies: LLSOAs, MLSOAs, LADs
+#'    and RGNs
+#' }
 #'
 #' @source Office for National Statistics; National Records of Scotland; Northern Ireland Statistics
 #' and Research Agency (2016): 2011 Census aggregate data. UK Data Service (Edition: June 2016).
