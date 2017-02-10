@@ -12,6 +12,6 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-  lme4
+  lme4, nlme
 RoxygenNote: 6.0.0
 Suggests: raster
