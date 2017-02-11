@@ -6,6 +6,7 @@ mid <- function(mydata, vars = c(1, 2), levels, expected = F, nsims = 100) {
   id <- idx(mydata, vars, expected, nsims)
   ols <- attr(id, "ols")
   vv <- attr(id, "vars")
+  lvls <- names(mydata)[levels]
   mydata <- data.frame(y = mydata[, vars[1]], x = mydata[, vars[2]], mydata[, levels])
   mydata$y <- mydata$y / sum(mydata$y)
   mydata$x <- mydata$x / sum(mydata$x)
@@ -14,7 +15,8 @@ mid <- function(mydata, vars = c(1, 2), levels, expected = F, nsims = 100) {
     f <- paste(f, "+", paste0("(1|", names(mydata)[k],")"))
   }
   mlm <- lme4::lmer(f, data=mydata, offset=x)
-  attributes(id) <- list(ols = ols, vars = vv, mlm = mlm, variance = varshare(mlm), holdback = holdback(mlm))
+  attributes(id) <- list(ols = ols, vars = vv, levels = lvls,
+                         mlm = mlm, variance = varshare(mlm), holdback = holdback(mlm))
   class(id) <- "index"
   return(id)
 }

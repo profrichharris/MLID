@@ -60,7 +60,6 @@ fit a multilevel index using function \code{id}.
 data(ethnicities)
 calcs <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
 summary(calcs)
-## Shows only the places with a greater than expected impact on the ID
-summary(calcs, min = 200)
+calcs$LAD
 calcs$RGN
 }

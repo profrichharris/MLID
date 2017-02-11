@@ -80,7 +80,7 @@ id <- function(mydata, vars, levels = NA, expected = F, nsims = 100) {
   return(id)
 }
 
-idx <- function(mydata, vars = c(1, 2), expected = F, nsims = 100, include.model = F) {
+idx <- function(mydata, vars, expected = F, nsims = 100, include.model = F) {
   Y <- mydata[, vars[1]]
   X <- mydata[, vars[2]]
   x <- X / sum(X)

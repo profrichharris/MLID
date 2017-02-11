@@ -16,21 +16,10 @@ print.index <- function(x, ...) {
 }
 
 
-summary.impacts <- function(x, min = 101, max = NA, ...) {
+summary.impacts <- function(x) {
 
-  cat(attr(x, "vars"),"\n")
-  lapply(x, shw, min = min, max = max)
-
-}
-
-
-shw <- function(x, min, max) {
-
-  vv <- x$impact
-  if(is.na(min)) min <- min(vv)
-  if(is.na(max)) max <- max(vv)
-  subset <- vv >= min & vv <= max
-  xx <- x[subset,]
-  xx <- xx[order(xx$impact),]
+  cat(attr(calcs, "vars"),"\n")
+  lapply(x, summary)
 
 }
+
