@@ -13,7 +13,7 @@
 #' The demonstation illustrates this using the classic example of a checkerboard.
 
 
-Checkerboard <- function() {
+checkerboard <- function() {
 
   if(!requireNamespace("raster", quietly = TRUE)) stop("Requires the raster package to be installed")
   if(!requireNamespace("sp", quietly = TRUE)) stop("Requires the sp package to be installed")
