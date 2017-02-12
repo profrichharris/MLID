@@ -40,6 +40,7 @@ sumup <- function(data, sumby, omit = NA) {
     ifelse (all(omit %in% names(data)), omit <- match(omit, names(data)),
             stop("Variables to omit not found"))
   }
+  if (anyNA(data)) stop("Contains NAs")
 
   cols <- sapply(data, is.numeric)
   if (!is.na(omit)) cols[omit] <- FALSE

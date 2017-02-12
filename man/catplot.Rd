@@ -4,10 +4,13 @@
 \alias{catplot}
 \title{Caterpillar plot}
 \usage{
-catplot(confint)
+catplot(confint, labels = T)
 }
 \arguments{
 \item{confint}{an object containing the output from function \code{confint.index}}
+
+\item{labels}{default is TRUE. If set to false, suppresses the automatic labelling
+of residuals on the plots with a confidence interval that does not overlap with any other}
 }
 \description{
 Draws a series of caterpillar plots, showing the residuals from the multilevel model
