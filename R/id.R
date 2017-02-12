@@ -91,7 +91,7 @@ idx <- function(data, vars, expected = F, nsims = 100, include.model = F) {
   X <- data[, vars[2]]
   x <- X / sum(X)
   y <- Y / sum(Y)
-  ols <- lm(y ~ 0, offset = x)
+  ols <- lm(y ~ 0, offset = x, model = F)
   id <- round(0.5 * sum(abs(residuals(ols))), 3)
   if (expected) {
     if (length(vars) == 3) {
