@@ -22,7 +22,8 @@ mid <- function(data, vars = c(1, 2), levels, expected = F, nsims = 100) {
   }
   mlm <- lme4::lmer(f, data=data, offset=x)
   attributes(id) <- list(ols = ols, vars = vv, levels = lvls,
-                         mlm = mlm, variance = varshare(mlm), holdback = holdback(mlm))
+                         mlm = mlm, variance = varshare(mlm), holdback = holdback(mlm),
+                         id = id[1])
   class(id) <- "index"
   return(id)
 }
