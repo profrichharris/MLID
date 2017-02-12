@@ -1,20 +1,25 @@
-mid <- function(mydata, vars = c(1, 2), levels, expected = F, nsims = 100) {
+## These are the functions for fitting the multilevel index using lme4,
+## calculating the percentage of the variance at each level and
+## also the holdback scores
+
+
+mid <- function(data, vars = c(1, 2), levels, expected = F, nsims = 100) {
   if (is.character((levels))) {
-    ifelse (all(levels %in% names(mydata)), levels <- match(levels, names(mydata)),
+    ifelse (all(levels %in% names(data)), levels <- match(levels, names(data)),
             stop("Higher level grouping variable not found"))
   }
-  id <- idx(mydata, vars, expected, nsims)
+  id <- idx(data, vars, expected, nsims)
   ols <- attr(id, "ols")
   vv <- attr(id, "vars")
-  lvls <- names(mydata)[levels]
-  mydata <- data.frame(y = mydata[, vars[1]], x = mydata[, vars[2]], mydata[, levels])
-  mydata$y <- mydata$y / sum(mydata$y)
-  mydata$x <- mydata$x / sum(mydata$x)
+  lvls <- names(data)[levels]
+  data <- data.frame(y = data[, vars[1]], x = data[, vars[2]], data[, levels])
+  data$y <- data$y / sum(data$y)
+  data$x <- data$x / sum(data$x)
   f <- "y ~ 0"
-  for(k in 3: ncol(mydata)) {
-    f <- paste(f, "+", paste0("(1|", names(mydata)[k],")"))
+  for(k in 3: ncol(data)) {
+    f <- paste(f, "+", paste0("(1|", names(data)[k],")"))
   }
-  mlm <- lme4::lmer(f, data=mydata, offset=x)
+  mlm <- lme4::lmer(f, data=data, offset=x)
   attributes(id) <- list(ols = ols, vars = vv, levels = lvls,
                          mlm = mlm, variance = varshare(mlm), holdback = holdback(mlm))
   class(id) <- "index"

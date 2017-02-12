@@ -4,10 +4,10 @@
 \alias{residuals.index}
 \title{Extract Model Residuals}
 \usage{
-\method{residuals}{index}(x, ...)
+\method{residuals}{index}(index, ...)
 }
 \arguments{
-\item{x}{an object of class \code{index}}
+\item{index}{an object of class \code{index}}
 }
 \value{
 a numeric vector of matrix containing the residuals
@@ -23,18 +23,19 @@ residuals may also be calculated.
 }
 \examples{
 data("ethnicities")
-index <- id(ethnicities, vars = c("Indian", "WhiteBrit"))
-resids <- residuals(index)
+index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
+resids <- rstandard(index)
+summary(resids)
+ethnicities[which.max(resids),]
 
-index <- id(ethnicities, vars = c("Indian", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
+index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
 resids <- residuals(index)
 head(resids)
+
 ## London is different from other regions:
 sort(tapply(resids[,5], ethnicities$RGN, mean))
-## But at a local authority scale it is Leicester that has the highest share of the
-## Indian population with respect to the White British:
+
+## At the local authority scale it is Tower Hamlets and Newham that have the highest share of the
+## Bangladeshi population with respect to the White British:
 tail(sort(tapply(resids[,4], ethnicities$LAD, mean)),5)
-}
-\seealso{
-\code{\link{id}}
 }

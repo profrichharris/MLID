@@ -7,49 +7,52 @@
 ##' For the standard index, standardized (\code{rstandard}) and studentized (\code{rstudent})
 ##' residuals may also be calculated.
 ##'
-##' @param x an object of class \code{index}
+##' @param index an object of class \code{index}
 ##' @return a numeric vector of matrix containing the residuals
 ##' @examples
 ##' data("ethnicities")
-##' index <- id(ethnicities, vars = c("Indian", "WhiteBrit"))
-##' resids <- residuals(index)
+##' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
+##' resids <- rstandard(index)
+##' summary(resids)
+##' ethnicities[which.max(resids),]
 ##'
-##' index <- id(ethnicities, vars = c("Indian", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
+##' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
 ##' resids <- residuals(index)
 ##' head(resids)
+##'
 ##' ## London is different from other regions:
 ##' sort(tapply(resids[,5], ethnicities$RGN, mean))
-##' ## But at a local authority scale it is Leicester that has the highest share of the
-##' ## Indian population with respect to the White British:
+##'
+##' ## At the local authority scale it is Tower Hamlets and Newham that have the highest share of the
+##' ## Bangladeshi population with respect to the White British:
 ##' tail(sort(tapply(resids[,4], ethnicities$LAD, mean)),5)
-##' @seealso \code{\link{id}}
 
-residuals.index <- function(x, ...) {
+residuals.index <- function(index, ...) {
 
-  if (!is.null(attr(x, "mlm"))) {
+  if (!is.null(attr(index, "mlm"))) {
 
-    vv <- attr(x, "mlm")
+    vv <- attr(index, "mlm")
     return(rvals(vv))
 
   } else {
 
-    vv <- attr(x, "ols")
+    vv <- attr(index, "ols")
     return(residuals(vv))
 
   }
 
 }
 
-rstandard.index <- function(x, ...) {
+rstandard.index <- function(index, ...) {
 
-  vv <- attr(x, "ols")
+  vv <- attr(index, "ols")
   return(rstandard(vv))
 
 }
 
-rstudent.index <- function(x, ...) {
+rstudent.index <- function(index, ...) {
 
-  vv <- attr(x, "ols")
+  vv <- attr(index, "ols")
   return(rstudent(vv))
 
 }

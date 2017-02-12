@@ -4,21 +4,21 @@
 \alias{impacts}
 \title{Impact calculations}
 \usage{
-impacts(mydata, vars, levels)
+impacts(data, vars, levels)
 }
 \arguments{
-\item{mydata}{a \code{data.frame} with \code{ncol(mydata) >= 2}. Each row of the data represents
+\item{data}{a data frame with \code{ncol(data) >= 2}. Each row of the data represents
 a neighbourhood or some other areal unit for which counts of population have been made.}
 
 \item{vars}{a character or numeric vector of length 2 or 3 giving either the names
-or columns positions of the variables in \code{mydata} in the following order
+or columns positions of the variables in \code{data} in the following order
 \enumerate{
    \item the number of population group Y in each neighbourhood
    \item the number of population group X in each neighbourhood
 }}
 
 \item{levels}{a character or numeric vector of minimum length 1 identifying either the names
-or columns positions of the variables in \code{mydata} that record to which higher-level grouping
+or columns positions of the variables in \code{data} that record to which higher-level grouping
 each lower-lower level unit belongs.}
 }
 \value{
@@ -28,7 +28,7 @@ geographies. The variables are
    \item \code{pcntID} The total contribution of the neighbourhoods within the region to
    the overall ID score, expressed as a percentage
    \item \code{pcntN} The number of neighbourhoods within the region, expressed as a
-   percentage of the total number in \code{mydata}
+   percentage of the total number in \code{data}
    \item \code{impact} The ratio of \code{pcntID} to \code{pcntN} multiplied by 100. Values
    over 100 indicate a group of neighbourhoods that have a disproportionately high impact
    on the ID.
@@ -40,6 +40,10 @@ geographies. The variables are
    two populations vary within the region. It is the standard deviation of those differences
    scaled by the standard error for the whole data set. Higher values indicate greater variability
    within the region.
+   \item \code{scldMin} The minimum difference between the share of the Y population and the
+   share of the X for neighbourhoods within the region, scaled by the standard error.
+   \item \code{scldMax} The maximum difference between the share of the Y population and the
+   share of the X for neighbourhoods within the region, scaled by the standard error.
 }
 }
 \description{
@@ -53,13 +57,19 @@ and the share of population group X that are observed in each neighbourhood. The
 function summaries those differences by higher-level geographies to consider which places or
 regions have the neighbourhoods that contribute most to the ID. The measures are useful
 for understanding where the seperations of the two population groups are greatest. However, to
-look at scale effects, considering the effect of each level \emph{net} of the other levels,
+look at scale effects, where the effect of each level \emph{net} of the other levels is wanted,
 fit a multilevel index using function \code{id}.
 }
 \examples{
 data(ethnicities)
 calcs <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
 summary(calcs)
-calcs$LAD
 calcs$RGN
+## London has the greatest impact on the ID
+## The 'excess' share of the Bangladeshi population is not especially significant (see scldMean)
+## but there is a lot of variation between neighbourhoods (see scldSD)
+lad.impacts <- calcs$LAD
+lad.impacts <- lad.impacts[order(lad.impacts$impact),]
+tail(lad.impacts)
+## Note the impacts of Tower Hamlets and Newham
 }
