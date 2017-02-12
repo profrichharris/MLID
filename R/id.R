@@ -79,7 +79,7 @@ id <- function(data, vars, levels = NA, expected = F, nsims = 100) {
                                           stop("Variable not found"))
   }
   if (!all(sapply(data[, vars], is.numeric))) stop("Variable is not numeric")
-  if (anyNA(data[,na.omit(c(vars, levels))])) stop("Contains NAs")
+  if (anyNA(data[,vars])) stop("Data contain NAs")
   ifelse (!is.na(levels), id <- mid(data, vars, levels, expected, nsims),
             id <- idx(data, vars, expected, nsims))
   return(id)

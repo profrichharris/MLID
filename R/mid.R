@@ -8,6 +8,7 @@ mid <- function(data, vars = c(1, 2), levels, expected = F, nsims = 100) {
     ifelse (all(levels %in% names(data)), levels <- match(levels, names(data)),
             stop("Higher level grouping variable not found"))
   }
+  if (anyNA(data[,levels])) stop("Data contain NAs")
   id <- idx(data, vars, expected, nsims)
   ols <- attr(id, "ols")
   vv <- attr(id, "vars")
