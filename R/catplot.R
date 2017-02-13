@@ -40,11 +40,12 @@ confint.index <- function(index, level = 0.95) {
 
   lvls <- 1:length(attr(index, "levels"))
   sigm <- sigma(attr(index, "ols"))
+  vr <- attr(index, "variance")
 
   cint <- lapply(lvls, function(x,
                                 v = vv,
                                 sigma = sigm,
-                                z = zz) {
+                                z = zz, vrc = vr) {
     se = sqrt(attr(v[[x]], "postVar")[1, ,])
     mn = v[[x]][, 1]
     upr <- mn + z * se
@@ -52,7 +53,8 @@ confint.index <- function(index, level = 0.95) {
     df <- data.frame(mn, lwr, upr) / sigma
     rownames(df) <- rownames(v[[x]])
     df <- round(df, 3)
-    attr(df, "level") <-names(v)[x]
+    attr(df, "level") <- names(v)[x]
+    attr(df, "variance") <- vrc[x+1]
     return(df)
   })
   names(cint) <- attr(index, "levels")
@@ -73,8 +75,8 @@ confint.index <- function(index, level = 0.95) {
 #'
 #' To aid the interpretability of the plots, the residuals are scaled by the standard error
 #' of the residuals from the OLS estimate of the index. Additionally, to avoid over-plotting
-#' only a maximum of 75 residuals are shown on each plot. These are the 10 highest and lowest
-#' rank residuals and then a sample of 55 from the remaining residuals, chosen at the ones
+#' only a maximum of 50 residuals are shown on each plot. These are the 10 highest and lowest
+#' ranked residuals and then a sample of 30 from the remaining residuals, chosen at the ones
 #' with values that differ most from the residuals that precede them by ranking. In this way,
 #' the plots aim to preserve the tails of the distribution as well as the most important
 #' break points inbetween.
@@ -90,8 +92,8 @@ confint.index <- function(index, level = 0.95) {
 
 catplot <- function(confint, labels = T) {
 
-  if(class(confintindex) != "catplotdata") stop("Object is of wrong type. Use output from confint.index()")
-  plot.catplotdata(confint, labels)
+  if(class(confint) != "confintindex") stop("Object is of wrong type. Use output from confint.index()")
+  plot.confintindex(confint, labels)
 
 }
 
@@ -107,13 +109,14 @@ plot.confintindex <- function(confint, labels = T) {
   par(mfrow = c(grd[1], grd[2]))
 
   lapply(confint, function(y) {
+
     y <- y[order(y[, 1], decreasing = T), ]
     n <- nrow(y)
     y$rank <- 1:n
 
-    if (n > 75) {
+    if (n > 50) {
       ymid <- y[11:(n - 10),]
-      while (nrow(ymid) > 55)
+      while (nrow(ymid) > 30)
         ymid <- thin(ymid)
       y <- rbind(y[1:10,], ymid, y[(n - 9):n,])
     }
@@ -124,7 +127,7 @@ plot.confintindex <- function(confint, labels = T) {
     plot(
       1:n,
       y$mn,
-      ylim = c(min(y[, 1:3]), max(y[, 1:3])),
+      ylim = c(min(y[, 2]), max(y[, 3])),
       xlab =  "Rank",
       ylab = "Scaled residual",
       las = 1,
@@ -162,6 +165,8 @@ plot.confintindex <- function(confint, labels = T) {
         cex = 0.6,
         pos = ifelse(y$i < median(y$i), 4, 2)[subset]
       )
+    txt <- paste0(attr(y, "variance"),"% of variance")
+    text(n, 0.9*max(y[, 3]), txt, pos = 2, cex = 0.7, offset = 0)
   })
   return()
 
