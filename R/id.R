@@ -102,7 +102,7 @@ idx <- function(data, vars, expected = F, nsims = 100, include.model = F) {
     }
     id <- c(id, id.sim(X, Y, N, nsims))
   }
-  attributes(id) <- list(ols = ols, vars = names(data)[vars])
+  attributes(id) <- list(ols = ols, vars = names(data)[vars], data = data.frame(Y, X))
   class(id) <- "index"
   return(id)
 }
