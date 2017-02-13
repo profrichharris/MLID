@@ -36,13 +36,13 @@ an object of class \code{index}. This is a value between zero and one where 0 im
 segreation, and 1 means 'complete segregation' - wherever group Y is located,
 X is not (and vice versa). If \code{expected = T} the expected value under randomisation also
 is given. In addition, the object contains the following attributes:
-\enumerate{
+\itemize{
    \item \code{attr(x, "ols")} an object of class \code{lm}. The OLS regression used to
    calculate the ID. Useful for identifying significant residuals (see Example below)
    \item \code{attr(x, "vars")} the names of Y and X in \code{data}
 }
 and, for a multilevel model,
-\enumerate{
+\itemize{
    \item \code{attr(index, "mlm")} an object of class \code{lmerMod}. Fitted using
    the \code{lme4} package
    \item \code{attr(index, "variance")} the percentage of the total variance due to each level
