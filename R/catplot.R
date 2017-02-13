@@ -31,7 +31,6 @@ confint.index <- function(index, level = 0.95) {
   if (is.null(mlm))
     stop("Object is not multilevel")
 
-  cat("\nCalculating standard errors, please wait")
   vv <- lme4::ranef(mlm, condVar = T)
 
   # Statistical Rules of Thumb, Gerald van Belle (2011), eq 2.18
