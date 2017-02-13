@@ -56,7 +56,7 @@ confint.index <- function(index, level = 0.95) {
     return(df)
   })
   names(cint) <- attr(index, "levels")
-  class(cint) <- "catplotdata"
+  class(cint) <- "confintindex"
   return(cint)
 
 }
@@ -90,13 +90,13 @@ confint.index <- function(index, level = 0.95) {
 
 catplot <- function(confint, labels = T) {
 
-  if(class(confint) != "catplotdata") stop("Object is of wrong type. Use output from confint.index()")
+  if(class(confintindex) != "catplotdata") stop("Object is of wrong type. Use output from confint.index()")
   plot.catplotdata(confint, labels)
 
 }
 
 
-plot.catplotdata <- function(confint, labels = T) {
+plot.confintindex <- function(confint, labels = T) {
   k <- length(confint)
   grd <- c(0, 0)
   grd[1] <- which.min(abs(1:20 - sqrt(k)))
