@@ -1,31 +1,41 @@
-##' Extract Model Residuals
-##'
-##' For the Index of Dissimilarity (ID), the residuals are the differences between the
-##' share of the Y population and the share of the X population per neighbourhood.
-##' For the multilevel index, the residuals are estimated at each level of the model.
-##'
-##' For the standard index, standardized (\code{rstandard}) and studentized (\code{rstudent})
-##' residuals may also be calculated.
-##'
-##' @param index an object of class \code{index}
-##' @return a numeric vector of matrix containing the residuals
-##' @examples
-##' data("ethnicities")
-##' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
-##' resids <- rstandard(index)
-##' summary(resids)
-##' ethnicities[which.max(resids),]
-##'
-##' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
-##' resids <- residuals(index)
-##' head(resids)
-##'
-##' ## London is different from other regions:
-##' sort(tapply(resids[,5], ethnicities$RGN, mean))
-##'
-##' ## At the local authority scale it is Tower Hamlets and Newham that have the highest share of the
-##' ## Bangladeshi population with respect to the White British:
-##' tail(sort(tapply(resids[,4], ethnicities$LAD, mean)),5)
+#' Extract Model Residuals
+#'
+#' For the Index of Dissimilarity (ID), the residuals are the differences between the
+#' share of the Y population and the share of the X population per neighbourhood.
+#' For the multilevel index, the residuals are estimated at and partitioned betweeneach level
+#' of the model.
+#'
+#' For the standard index, standardized (\code{rstandard}) and studentized (\code{rstudent})
+#' residuals also may be calculated.
+#'
+#' @param index an object of class \code{index}
+#' @return a numeric vector of matrix containing the residuals
+#' @examples
+#' data("ethnicities")
+#' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
+#' ## The ID can be derived from the residuals
+#' 0.5 * sum(abs(residuals(index)))
+#' ## which is the same as
+#' index[1]
+#'
+#' ## Extract the standardized and look for regions where the share of the
+#' ## Bangladeshi population is unusualy high with respect to the White British
+#' ## resids <- rstandard(index)
+#' ## table(ethnicities$RGN[resids > 2.58])
+#'
+#' ## Residuals for a multilevel index
+#' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
+#' resids <- residuals(index)
+#' head(resids)
+#' ## Again, the ID can be derived from the residuals
+#' 0.5 * sum(abs(rowSums(resids)))
+#'
+#' ## Looking at the residuals, the London effect is different from other regions:
+#' sort(tapply(resids[,5], ethnicities$RGN, mean))
+#'
+#' ## At the local authority scale it is Tower Hamlets and Newham (both in London) that have
+#' ## the highest share of the Bangladeshi population with respect to the White British:
+#' tail(sort(tapply(resids[,4], ethnicities$LAD, mean)),5)
 
 residuals.index <- function(index, ...) {
 
