@@ -1,20 +1,21 @@
 
 
-predict.index <- function(index, exclude) {
+predict.index <- function(index, places) {
 
   mlm <- attr(index, "mlm")
   data <- slot(mlm, "frame")
+  rawdata <- slot(index, "data")
   rr <- rvals(mlm)
   id <- index[1]
 
-  drop <- lapply(exclude, function(x, df = data, rr = rr) {
+  drop <- lapply(places, function(x, df = data, rr = rr) {
     k <- which(apply(df, 2, function(y) any(y == x)))
     j <- which(df[, k] == x)
     return(list(k, j))
   })
 
   dummies <- matrix(0, ncol = ncol(rr), nrow = nrow(rr))
-  subset <- rep(TRUE, nrow(rr))
+  subset <- rep(F, nrow(rr))
 
   for(i in 1:length(drop)) {
 
@@ -22,21 +23,52 @@ predict.index <- function(index, exclude) {
     j <- drop[[i]][[2]]
     rr[j, k] <- 0
     dummies[j, k] <- 1
-    subset[j] <- FALSE
+    subset[j] <- T
 
   }
 
   newid <- 0.5 * sum(abs(rowSums(rr)))
-  ols2 <- lm(data$y ~ 0, offset = data$"(offset)", subset = subset)
-  newid2 <- 0.5 * sum(abs(residuals(ols2)))
 
-  df <- data.frame(ID = c(id, newid, 0, 0), ID2 = c(id, newid2, 0, 0))
-  rownames(df) <- c("before", "after", "difference", "% change")
-  print(format(round(df,3), nsmall = 3))
+  ols <- lm(data$y ~ 0, offset = data$"(offset)", subset = subset)
+  newid2 <- 0.5 * sum(abs(residuals(ols)))
 
-  ols2 <- lm(data$y ~ 0 + dummies, offset = data$"(offset)")
-  r2 <- summary(ols2)$r.squared
+  newid3 <- idx(rawdata[subset,], c(1, 2))[1]
 
-  cat("\nR-squared of",round(r2,3))
+  ols <- lm(data$y ~ 0 + dummies, offset = data$"(offset)")
+
+  df <- data.frame(ID1 = c(id, newid), ID2 = c(id, newid2),
+                   ID3 = c(id, newid3))
+
+  impact <- sum(subset) / length(subset)
+  impact <- (df[2, 2] / df[1, 2]) / impact * 100
+
+  df <- round(df, 3)
+  rownames(df) <- c("before", "after")
+
+  attr(df, "Rsq") <- round(summary(ols)$r.squared, 3)
+  attr(df, "impact") <- round(impact, 0)
+  attr(df, "places") <- places
+  attr(df, "vars") <- attr(index, "vars")
+  class(df) <- "predictindex"
+  return(df)
 
 }
+
+
+print.predictindex <- function(x) {
+  cat(paste(attr(x, "vars")[1:2], collapse=" ~ "),"\n")
+  df <- matrix(unlist(x), ncol = length(x))
+  colnames(df) <- names(x)
+  rownames(df) <- attr(x,"row.names")
+  print(df)
+  exclude <- attr(x,"places")
+  cat("\nR-squared:", attr(x, "Rsq"), "   Impact", attr(x, "impact"))
+  cat("\n\nNote:")
+  cat("\nID1: if the residual effect of",exclude,"is set to zero")
+  cat("\nID2: if the shares of", paste(attr(x, "vars")[1:2], collapse=" & "),
+      "are equal everywhere except", exclude)
+  cat("\nID3: the index value for", exclude, "alone")
+
+
+}
+
