@@ -12,7 +12,8 @@
 #' A 95 per cent confidence interval, for example, extends to 1.39 times the standard error
 #' around the mean and not 1.96.
 #'
-#' @param index an object of class \code{index}: a multilevel index created using function \code{id}
+#' @param index an object of class \code{index}: a multilevel index created using function
+#' \code{\link{id}}
 #' @param level the confidence level required
 #' @return an object of class \code{confint}, a list of length equal to the number
 #' of levels in the index where each part of the list is a data frame giving the confidence
@@ -22,6 +23,7 @@
 #' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
+#' @seealso \code{\link{catplot}} \code{\link{id}} \code{\link[lme4]{ranef}}
 
 
 confint.index <- function(index, level = 0.95) {
@@ -80,7 +82,7 @@ confint.index <- function(index, level = 0.95) {
 #' the plots aim to preserve the tails of the distribution as well as the most important
 #' break points inbetween.
 #'
-#' @param confint an object containing the output from function \code{confint.index}
+#' @param confint an object containing the output from function \code{\link{confint.index}}
 #' @param labels default is TRUE. If set to false, suppresses the automatic labelling
 #' of residuals on the plots with a confidence interval that does not overlap with any other
 #' @examples
@@ -88,6 +90,7 @@ confint.index <- function(index, level = 0.95) {
 #' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
+#' @seealso \code{\link{confint.index}} \code{\link{id}}
 
 catplot <- function(confint, labels = T) {
 

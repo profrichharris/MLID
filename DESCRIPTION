@@ -4,7 +4,8 @@ Title: Multilevel Index of Dissimilarity
 Version: 0.0.0.9000
 Author: Richard Harris, School of Geographical Sciences, University of Bristol
 Maintainer: Richard Harris <rich.harris@bris.ac.uk>
-Description: Functions for fitting a multilevel index of dissimilarity
+Contributor: Dewi Owen
+Description: Tools and functions for fitting a multilevel index of dissimilarity
     to geographically hierarchichal data
 Depends: R (>= 3.3.2)
 URL: https://github.com/profrichharris/MLID

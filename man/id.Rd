@@ -44,7 +44,7 @@ is given. In addition, the object contains the following attributes:
 and, for a multilevel model,
 \itemize{
    \item \code{attr(index, "mlm")} an object of class \code{lmerMod}. Fitted using
-   the \code{lme4} package
+   \code{\link[lme4]{lmer}}
    \item \code{attr(index, "variance")} the percentage of the total variance due to each level
    of the model. This indicates the scale at which the segregation is most prominent
    \item \code{attr(index, "holdback")} records the percentage change in the ID that occurs if,
@@ -68,7 +68,6 @@ each level and the holdback scores.
 \examples{
 data("ethnicities")
 head(ethnicities)
-
 ## Calculate the standard index value
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
 
@@ -80,4 +79,7 @@ id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"), expected = T)
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
 levels=c("LLSOA","MLSOA","LAD","RGN"), expected = T)
+}
+\seealso{
+\code{\link{residuals.index}} \code{\link[lme4]{lmer}}
 }

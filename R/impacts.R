@@ -10,7 +10,7 @@
 #' regions have the neighbourhoods that contribute most to the ID. The measures are useful
 #' for understanding where the seperations of the two population groups are greatest. However, to
 #' look at scale effects, where the effect of each level \emph{net} of the other levels is wanted,
-#' fit a multilevel index using function \code{id}.
+#' fit a multilevel index using function \code{\link{id}}.
 #'
 
 #' @param data a data frame with \code{ncol(data) >= 2}. Each row of the data represents

@@ -15,7 +15,7 @@
 #' into which the data will be aggregated (summed)
 #' @param omit a character or numeric vector identifying any variables to be omitted from
 #' the aggregated data, such as lower-level names and identifiers
-#' @return a \code{data.frame} containing the aggregated data
+#' @return a data frame containing the aggregated data
 #' @examples
 #' data(ethnicities)
 #' head(ethnicities)
@@ -29,6 +29,7 @@
 #'
 #' aggdata <- sumup(ethnicities, sumby = "MLSOA", omit = "LLSOA")
 #' id(aggdata, vars=c("Arab","Other","Persons"), expected = T)
+#' @seealso \code{\link{id}}
 
 sumup <- function(data, sumby, omit = NA) {
 

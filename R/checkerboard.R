@@ -42,9 +42,8 @@ checkerboard <- function() {
   Y <- as.vector(t(y/sum(y)))
   mydata <- data.frame(gridcodes, X, Y)
 
-  index <- id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8"))
   cat("\nExample 1 (see plot for pattern)\n")
-  summary(index)
+  print(id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8")))
 
   invisible(readline(prompt="\nPress [enter] to continue"))
 
@@ -62,9 +61,8 @@ checkerboard <- function() {
   Y <- as.vector(t(y/sum(y)))
   mydata <- data.frame(gridcodes, X, Y)
 
-  index <- id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8"))
   cat("\nExample 2 (see plot for pattern)\n")
-  summary(index)
+  print(id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8")))
 
   invisible(readline(prompt="\nPress [enter] to continue"))
 
@@ -82,9 +80,8 @@ checkerboard <- function() {
   Y <- as.vector(t(y/sum(y)))
   mydata <- data.frame(gridcodes, X, Y)
 
-  index <- id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8"))
   cat("\nExample 3 (see plot for pattern)\n")
-  summary(index)
+  print(id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8")))
 
   invisible(readline(prompt="\nPress [enter] to continue"))
 
@@ -102,8 +99,8 @@ checkerboard <- function() {
   Y <- as.vector(t(y/sum(y)))
   mydata <- data.frame(gridcodes, X, Y)
 
-  index <- id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8"))
   cat("\nExample 4 (see plot for pattern)\n")
-  summary(index)
+  print(id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8")))
+
 
 }

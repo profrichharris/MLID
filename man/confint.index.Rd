@@ -7,7 +7,8 @@
 \method{confint}{index}(index, level = 0.95)
 }
 \arguments{
-\item{index}{an object of class \code{index}: a multilevel index created using function \code{id}}
+\item{index}{an object of class \code{index}: a multilevel index created using function
+\code{\link{id}}}
 
 \item{level}{the confidence level required}
 }
@@ -35,4 +36,7 @@ data("ethnicities")
 index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
 ci <- confint(index)
 catplot(ci)
+}
+\seealso{
+\code{\link{catplot}} \code{\link{id}} \code{\link[lme4]{ranef}}
 }

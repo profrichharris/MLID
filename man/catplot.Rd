@@ -7,7 +7,7 @@
 catplot(confint, labels = T)
 }
 \arguments{
-\item{confint}{an object containing the output from function \code{confint.index}}
+\item{confint}{an object containing the output from function \code{\link{confint.index}}}
 
 \item{labels}{default is TRUE. If set to false, suppresses the automatic labelling
 of residuals on the plots with a confidence interval that does not overlap with any other}
@@ -34,4 +34,7 @@ data("ethnicities")
 index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
 ci <- confint(index)
 catplot(ci)
+}
+\seealso{
+\code{\link{confint.index}} \code{\link{id}}
 }

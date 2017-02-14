@@ -18,7 +18,7 @@ into which the data will be aggregated (summed)}
 the aggregated data, such as lower-level names and identifiers}
 }
 \value{
-a \code{data.frame} containing the aggregated data
+a data frame containing the aggregated data
 }
 \description{
 Aggregates the data into higher level groups by calculating the sum
@@ -44,4 +44,7 @@ id(aggdata, vars=c("Arab","Other","Persons"), expected = T)
 
 aggdata <- sumup(ethnicities, sumby = "MLSOA", omit = "LLSOA")
 id(aggdata, vars=c("Arab","Other","Persons"), expected = T)
+}
+\seealso{
+\code{\link{id}}
 }
