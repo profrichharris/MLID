@@ -106,3 +106,14 @@ impact.calcs <- function(col, data, rr, se) {
 
   return(df)
 }
+
+
+
+summary.impacts <- function(x) {
+
+  cat(attr(calcs, "vars"),"\n")
+  lapply(x, summary)
+
+}
+
+
