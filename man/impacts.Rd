@@ -64,11 +64,12 @@ fit a multilevel index using function \code{\link{id}}.
 data(ethnicities)
 calcs <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
 summary(calcs)
+## sorted by impact score
 summary(calcs, n = 10)
-calcs$RGN
 ## London has the greatest impact on the ID
 ## The 'excess' share of the Bangladeshi population is not especially significant (see scldMean)
 ## but there is a lot of variation between neighbourhoods (see scldSD)
+calcs$RGN
 lad.impacts <- calcs$LAD
 lad.impacts <- lad.impacts[order(lad.impacts$impact),]
 tail(lad.impacts)
