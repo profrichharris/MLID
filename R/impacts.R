@@ -51,6 +51,7 @@
 #' data(ethnicities)
 #' calcs <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
 #' summary(calcs)
+#' summary(calcs, n = 10)
 #' calcs$RGN
 #' ## London has the greatest impact on the ID
 #' ## The 'excess' share of the Bangladeshi population is not especially significant (see scldMean)
@@ -109,10 +110,13 @@ impact.calcs <- function(col, data, rr, se) {
 
 
 
-summary.impacts <- function(x) {
+summary.impacts <- function(x, n = 5) {
 
   cat(attr(calcs, "vars"),"\n")
-  lapply(x, summary)
+  lapply(x, function(y) {
+    y <- y[order(y$impact),]
+    tail(y, n = n)
+    })
 
 }
 
