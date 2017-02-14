@@ -23,3 +23,6 @@ summary.impacts <- function(x) {
 
 }
 
+
+
+
