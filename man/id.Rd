@@ -69,19 +69,12 @@ each level and the holdback scores.
 data("ethnicities")
 head(ethnicities)
 
-## Caculate the standard index value
+## Calculate the standard index value
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
 
 ## Calculate also the expected value under randomisation
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), expected = T)
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"), expected = T)
-
-## The index is fitted as a standard OLS model so we can
-## extract the standardized residuals and, in this example, look for regions where the share
-## of the Bangladeshi population is unusualy high with respect to the White British
-index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
-resids <- rstandard(index)
-table(ethnicities$RGN[resids > 2.58])
 
 ## A multilevel model
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))

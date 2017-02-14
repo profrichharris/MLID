@@ -23,8 +23,8 @@ Index of Dissimilarity net of the effects of other scales.
 
 To aid the interpretability of the plots, the residuals are scaled by the standard error
 of the residuals from the OLS estimate of the index. Additionally, to avoid over-plotting
-only a maximum of 75 residuals are shown on each plot. These are the 10 highest and lowest
-ranked residuals and then a sample of 55 from the remaining residuals, chosen at the ones
+only a maximum of 50 residuals are shown on each plot. These are the 10 highest and lowest
+ranked residuals and then a sample of 30 from the remaining residuals, chosen at the ones
 with values that differ most from the residuals that precede them by ranking. In this way,
 the plots aim to preserve the tails of the distribution as well as the most important
 break points inbetween.
