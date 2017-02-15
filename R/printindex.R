@@ -1,4 +1,9 @@
-
+#' Print values
+#'
+#' Prints output from the single or multi-level index of dissimilarity
+#'
+#' @param x output from \code{\link{id}}
+#' @param ... other arguments
 
 print.index <- function(x, ...) {
   cat(paste(attr(x, "vars")[1:2], collapse=" ~ "),"\n")

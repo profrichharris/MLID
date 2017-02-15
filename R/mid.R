@@ -9,6 +9,8 @@
             stop("Higher level grouping variable not found"))
   }
   if (anyNA(data[,levels])) stop("Data contain NAs")
+  if (any(sapply(data[, levels], is.numeric)))
+    warning("The levels contain numeric data")
   id <- .idx(data, vars, expected, nsims)
   ols <- attr(id, "ols")
   vv <- attr(id, "vars")

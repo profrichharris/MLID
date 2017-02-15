@@ -23,9 +23,9 @@
 #' number of levels in the index where each part of the list is a data frame
 #' giving the confidence interval for the location
 #' @examples
-#' data("ethnicities")
+#' data(ethnicities)
 #' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-#' levels=c("LLSOA","MLSOA","LAD","RGN"))
+#' levels=c("LSOA","MSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
 #' @seealso \code{\link{catplot}} \code{\link{id}} \code{\link[lme4]{ranef}}
@@ -89,6 +89,11 @@ confint.index <- function(object, parm, level = 0.95, ...) {
 #' In this way, the plots aim to preserve the tails of the distribution as well
 #' as the most important break points inbetween.
 #'
+#' When \code{ann = TRUE} (the default) some outliers are labelled and the
+#' percentage of the total variance due to each level is included. These
+#' will not add up to 100% because the base level is not presented.
+#' \code{catplot} is a wrapper to \code{\link{plot.confintindex}}
+#'
 #' @param confint an object containing the output from function
 #' \code{\link{confint.index}}
 #' @param ann default is TRUE. If set to false, suppresses the automatic
@@ -97,9 +102,10 @@ confint.index <- function(object, parm, level = 0.95, ...) {
 #' @examples
 #' data("ethnicities")
 #' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-#' levels=c("LLSOA","MLSOA","LAD","RGN"))
+#' levels=c("LSOA","MSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
+#' # Plots for all levels above the base level
 #' @seealso \code{\link{confint.index}} \code{\link{id}}
 
 catplot <- function(confint, ann = TRUE) {
@@ -110,6 +116,16 @@ catplot <- function(confint, ann = TRUE) {
 
 }
 
+
+#' Plot the confidence intervals for the multilevel residuals
+#'
+#' Plots the confidence intervals to produce a caterpillar plot
+#'
+#' @param x an object containing the output from function
+#' \code{\link{confint.index}}
+#' @param ann add annotation to the plot?
+#' @param ... other arguments
+#' @seealso \code{\link{catplot}}
 
 plot.confintindex <- function(x, ann = TRUE, ...) {
   k <- length(x)

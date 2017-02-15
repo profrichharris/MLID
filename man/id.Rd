@@ -2,7 +2,7 @@
 % Please edit documentation in R/id.R
 \name{id}
 \alias{id}
-\title{(Multilevel) Index of dissimilarity}
+\title{(Multilevel) index of dissimilarity}
 \usage{
 id(data, vars, levels = NA, expected = FALSE, nsims = 100)
 }
@@ -75,22 +75,28 @@ under randomisation (NA if not calculated), and, for a multilevel model,
 the percentage share of the variance at each level and the holdback scores.
 }
 \examples{
-data("ethnicities")
+data(ethnicities)
 head(ethnicities)
 # Calculate the standard index value
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
 
 # Calculate also the expected value under randomisation
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), expected = TRUE)
+# will generate a warning because the total population per neighbourhood
+# has not been specified
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
 expected = TRUE)
 
-## A multilevel model
+# A multilevel model
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-levels=c("LLSOA","MLSOA","LAD","RGN"))
+levels=c("LSOA","MSOA","LAD","RGN"))
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
-levels=c("LLSOA","MLSOA","LAD","RGN"), expected = TRUE)
+levels=c("LSOA","MSOA","LAD","RGN"), expected = TRUE)
 }
 \seealso{
 \code{\link{residuals.index}} \code{\link[lme4]{lmer}}
+
+Harris R (2016) Measuring the scales of segregation: Looking at the
+residential separation of White British and other school children in England
+using a multilevel index of dissimilarity \url{http://bit.ly/2lQ4r0n}
 }

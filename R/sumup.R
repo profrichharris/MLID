@@ -5,10 +5,10 @@
 #'
 #' Sometimes a population group is too few in number sensibly to be analysed at
 #' the smallest area scale. An indication of this is when the expected value
-#' under randomisation of the Index of Dissimilarity is a large fraction of the
+#' under randomisation of the index of dissimilarity is a large fraction of the
 #' observed value. In this case, the data can be aggregated into higher level
 #' units, summing the population counts. Aggregating the data also can be used
-#' to explore how the ID changes with the scale of analysis.
+#' to explore how the index changes with the scale of analysis.
 #'
 #' @inheritParams id
 #' @param sumby a character or numeric vector of length 1 identifying either
@@ -23,12 +23,12 @@
 #' id(ethnicities, vars=c("Arab","Other","Persons"), expected = TRUE)
 #' # the expected value is very high relative to the ID
 #'
-#' aggdata <- sumup(ethnicities, sumby = "LLSOA", omit = "OA")
+#' aggdata <- sumup(ethnicities, sumby = "LSOA", omit = "OA")
 #' head(aggdata)
 #' id(aggdata, vars=c("Arab","Other","Persons"), expected = TRUE)
 #' # Note the sensitivity of the ID to the scale of analysis
 #'
-#' aggdata <- sumup(ethnicities, sumby = "MLSOA", omit = "LLSOA")
+#' aggdata <- sumup(ethnicities, sumby = "MSOA", omit = "LSOA")
 #' id(aggdata, vars=c("Arab","Other","Persons"), expected = TRUE)
 #' @seealso \code{\link{id}}
 

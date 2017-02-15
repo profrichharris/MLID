@@ -52,11 +52,11 @@ the higher-level geographies. The variables are
 }
 }
 \description{
-Calculates the total contribution to the Index of Dissimilarity of
+Calculates the total contribution to the index of dissimilarity of
 neighbourhoods grouped by regions or other higher-level geographies
 }
 \details{
-When the Index of Dissimilarity (ID) is estimated as a regression model
+When the index of dissimilarity (ID) is estimated as a regression model
 the residuals from that model are the differences between the share of
 population group Y and the share of population group X that are observed in
 each neighbourhood. The \code{impacts} function summaries those differences
@@ -70,7 +70,7 @@ function \code{\link{id}}.
 \examples{
 data(ethnicities)
 calcs <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
-tail(calcs)
+head(calcs)
 # sorted by impact score
 # For $RGN London has the greatest impact on the ID
 # The 'excess' share of the Bangladeshi population is not especially

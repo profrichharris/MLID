@@ -12,7 +12,15 @@
 #' In contrast, the multilevel index can detect the differences because
 #' different patterns (scales) of segregation change the percentage of the
 #' variance due to each level. The demonstation illustrates this using the
-#' classic example of a checkerboard.
+#' classic example of a checkerboard. The examples show how the percentage
+#' of the total variance (labelled Pvariance) moves up the hierarchy with
+#' the increase in spatial clustering at greater geographical cases. However,
+#' the ID is always the same.
+#'
+#  (The 'stray' cell in examples 2-4 is
+#' to allow the model to be fitted but it also correctly identifies that some
+#' of the variation remains at the base level)
+#' @seealso \code{\link{id}}
 
 
 checkerboard <- function() {

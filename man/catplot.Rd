@@ -32,13 +32,19 @@ and then a sample of 30 from the remaining residuals, chosen at the ones
 with values that differ most from the residuals that precede them by ranking.
 In this way, the plots aim to preserve the tails of the distribution as well
 as the most important break points inbetween.
+
+When \code{ann = TRUE} (the default) some outliers are labelled and the
+percentage of the total variance due to each level is included. These
+will not add up to 100% because the base level is not presented.
+\code{catplot} is a wrapper to \code{\link{plot.confintindex}}
 }
 \examples{
 data("ethnicities")
 index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-levels=c("LLSOA","MLSOA","LAD","RGN"))
+levels=c("LSOA","MSOA","LAD","RGN"))
 ci <- confint(index)
 catplot(ci)
+# Plots for all levels above the base level
 }
 \seealso{
 \code{\link{confint.index}} \code{\link{id}}

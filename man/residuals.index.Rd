@@ -15,17 +15,16 @@
 a numeric vector of matrix containing the residuals
 }
 \description{
-For the Index of Dissimilarity (ID), the residuals are the differences
+For the ndex of dissimilarity (ID), the residuals are the differences
 between the share of the Y population and the share of the X population per
 neighbourhood. For the multilevel index, the residuals are estimated at and
 partitioned betweeneach level of the model.
 }
-\details{
-For the standard index, standardized (\code{rstandard}) and studentized
-(\code{rstudent}) residuals also may be calculated.
-}
 \examples{
-data("ethnicities")
+data(ethnicities)
+}
+\seealso{
+\code{\link{rstandard.index}} \code{\link{rstudent.index}}
 index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
 # The ID can be derived from the residuals
 0.5 * sum(abs(residuals(index)))
@@ -39,7 +38,7 @@ index[1]
 
 # Residuals for a multilevel index
 index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-levels=c("LLSOA","MLSOA","LAD","RGN"))
+levels=c("LSOA","MSOA","LAD","RGN"))
 resids <- residuals(index)
 head(resids)
 # Again, the ID can be derived from the residuals

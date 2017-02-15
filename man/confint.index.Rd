@@ -38,9 +38,9 @@ Belle, 2011, eq 2.18). A 95 per cent confidence interval, for example,
 extends to 1.39 times the standard error around the mean and not 1.96.
 }
 \examples{
-data("ethnicities")
+data(ethnicities)
 index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-levels=c("LLSOA","MLSOA","LAD","RGN"))
+levels=c("LSOA","MSOA","LAD","RGN"))
 ci <- confint(index)
 catplot(ci)
 }
