@@ -21,7 +21,7 @@
   for(k in 3: ncol(data)) {
     f <- paste(f, "+", paste0("(1|", names(data)[k],")"))
   }
-  mlm <- lme4::lmer(f, data=data, offset=x)
+  mlm <- lme4::lmer(f, data=data, offset=data$x)
   attributes(id) <- list(ols = ols, vars = vv, levels = lvls,
                          mlm = mlm, variance = .varshare(mlm),
                          holdback = .holdback(mlm),
