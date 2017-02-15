@@ -7,15 +7,16 @@
 sumup(data, sumby, omit = NA)
 }
 \arguments{
-\item{data}{a data frame with \code{ncol(data) >= 2}. Each row of the data represents
-a neighbourhood or some other areal unit for which counts of population have been made.}
+\item{data}{a data frame with \code{ncol(data) >= 2}. Each row of the data
+represents a neighbourhood or some other areal unit for which counts of
+population have been made.}
 
-\item{sumby}{a character or numeric vector of length 1 identifying either the name
-or columns position of the variables in \code{data} that records the higher-level group
-into which the data will be aggregated (summed)}
+\item{sumby}{a character or numeric vector of length 1 identifying either
+the name or columns position of the variables in \code{data} that records the
+higher-level group into which the data will be aggregated (summed)}
 
-\item{omit}{a character or numeric vector identifying any variables to be omitted from
-the aggregated data, such as lower-level names and identifiers}
+\item{omit}{a character or numeric vector identifying any variables to be
+omitted from the aggregated data, such as lower-level names and identifiers}
 }
 \value{
 a data frame containing the aggregated data
@@ -25,25 +26,26 @@ Aggregates the data into higher level groups by calculating the sum
 of all the numeric data columns by group
 }
 \details{
-Sometimes a population group is too few in number sensibly to be analysed at the smallest
-area scale. An indication of this is when the expected value under randomisation
-of the Index of Dissimilarity is a large fraction of the observed value. In this case,
-the data can be aggregated into higher level units, summing the population counts. Aggregating
-the data also can be used to explore how the ID changes with the scale of analysis.
+Sometimes a population group is too few in number sensibly to be analysed at
+the smallest area scale. An indication of this is when the expected value
+under randomisation of the Index of Dissimilarity is a large fraction of the
+observed value. In this case, the data can be aggregated into higher level
+units, summing the population counts. Aggregating the data also can be used
+to explore how the ID changes with the scale of analysis.
 }
 \examples{
 data(ethnicities)
 head(ethnicities)
-id(ethnicities, vars=c("Arab","Other","Persons"), expected = T)
+id(ethnicities, vars=c("Arab","Other","Persons"), expected = TRUE)
 # the expected value is very high relative to the ID
 
 aggdata <- sumup(ethnicities, sumby = "LLSOA", omit = "OA")
 head(aggdata)
-id(aggdata, vars=c("Arab","Other","Persons"), expected = T)
+id(aggdata, vars=c("Arab","Other","Persons"), expected = TRUE)
 # Note the sensitivity of the ID to the scale of analysis
 
 aggdata <- sumup(ethnicities, sumby = "MLSOA", omit = "LLSOA")
-id(aggdata, vars=c("Arab","Other","Persons"), expected = T)
+id(aggdata, vars=c("Arab","Other","Persons"), expected = TRUE)
 }
 \seealso{
 \code{\link{id}}

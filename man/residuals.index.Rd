@@ -4,48 +4,52 @@
 \alias{residuals.index}
 \title{Extract Model Residuals}
 \usage{
-\method{residuals}{index}(index, ...)
+\method{residuals}{index}(object, ...)
 }
 \arguments{
-\item{index}{an object of class \code{index}}
+\item{object}{an object of class \code{index}}
+
+\item{...}{other arguments}
 }
 \value{
 a numeric vector of matrix containing the residuals
 }
 \description{
-For the Index of Dissimilarity (ID), the residuals are the differences between the
-share of the Y population and the share of the X population per neighbourhood.
-For the multilevel index, the residuals are estimated at and partitioned betweeneach level
-of the model.
+For the Index of Dissimilarity (ID), the residuals are the differences
+between the share of the Y population and the share of the X population per
+neighbourhood. For the multilevel index, the residuals are estimated at and
+partitioned betweeneach level of the model.
 }
 \details{
-For the standard index, standardized (\code{rstandard}) and studentized (\code{rstudent})
-residuals also may be calculated.
+For the standard index, standardized (\code{rstandard}) and studentized
+(\code{rstudent}) residuals also may be calculated.
 }
 \examples{
 data("ethnicities")
 index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
-## The ID can be derived from the residuals
+# The ID can be derived from the residuals
 0.5 * sum(abs(residuals(index)))
-## which is the same as
+# which is the same as
 index[1]
 
-## Extract the standardized and look for regions where the share of the
-## Bangladeshi population is unusualy high with respect to the White British
-## resids <- rstandard(index)
-## table(ethnicities$RGN[resids > 2.58])
+# Extract the standardized and look for regions where the share of the
+# Bangladeshi population is unusualy high with respect to the White British
+# resids <- rstandard(index)
+# table(ethnicities$RGN[resids > 2.58])
 
-## Residuals for a multilevel index
-index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
+# Residuals for a multilevel index
+index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
+levels=c("LLSOA","MLSOA","LAD","RGN"))
 resids <- residuals(index)
 head(resids)
-## Again, the ID can be derived from the residuals
+# Again, the ID can be derived from the residuals
 0.5 * sum(abs(rowSums(resids)))
 
-## Looking at the residuals, the London effect is different from other regions:
+# Looking at the residuals, the London effect is different from other regions
 sort(tapply(resids[,5], ethnicities$RGN, mean))
 
-## At the local authority scale it is Tower Hamlets and Newham (both in London) that have
-## the highest share of the Bangladeshi population with respect to the White British:
+# At the local authority scale it is Tower Hamlets and Newham
+# (both in London) that have the highest share of the Bangladeshi population
+# with respect to the White British:
 tail(sort(tapply(resids[,4], ethnicities$LAD, mean)),5)
 }

@@ -1,1 +1,22 @@
 exportPattern("^[[:alpha:]]+")
+importFrom("grDevices", "colorRampPalette")
+importFrom("graphics", "abline", "arrows", "axis", "par", "plot","text")
+importFrom("methods", "slot")
+importFrom("stats", "lm", "median", "qnorm", "quantile", "rbinom",
+             "residuals", "rstandard", "rstudent", "sd", "sigma")
+importFrom("utils", "tail", "head")
+S3method(confint, index)
+S3method(plot, confintindex)
+S3method(predict, index)
+S3method(print, index)
+S3method(print, predictindex)
+S3method(residuals, index)
+S3method(rstandard, index)
+S3method(rstudent, index)
+S3method(head, impacts)
+S3method(tail, impacts)
+
+
+
+
+

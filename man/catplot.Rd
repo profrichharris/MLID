@@ -4,34 +4,39 @@
 \alias{catplot}
 \title{Caterpillar plot}
 \usage{
-catplot(confint, labels = T)
+catplot(confint, labels = TRUE)
 }
 \arguments{
-\item{confint}{an object containing the output from function \code{\link{confint.index}}}
+\item{confint}{an object containing the output from function
+\code{\link{confint.index}}}
 
-\item{labels}{default is TRUE. If set to false, suppresses the automatic labelling
-of residuals on the plots with a confidence interval that does not overlap with any other}
+\item{labels}{default is TRUE. If set to false, suppresses the automatic
+labelling of residuals on the plots with a confidence interval that does not
+overlap with any other}
 }
 \description{
-Draws a series of caterpillar plots, showing the residuals from the multilevel model
-at each level and the estimates of their confidence interval
+Draws a series of caterpillar plots, showing the residuals from the
+multilevel model at each level and the estimates of their confidence interval
 }
 \details{
-A caterpillar plot is a visual way of looking at the variance of the residuals at each
-level of a multilevel model. It can be used to see which places are contributing most to the
-Index of Dissimilarity net of the effects of other scales.
+A caterpillar plot is a visual way of looking at the variance of the
+residuals at each level of a multilevel model. It can be used to see which
+places are contributing most to the Index of Dissimilarity net of the
+effects of other scales.
 
-To aid the interpretability of the plots, the residuals are scaled by the standard error
-of the residuals from the OLS estimate of the index. Additionally, to avoid over-plotting
-only a maximum of 50 residuals are shown on each plot. These are the 10 highest and lowest
-ranked residuals and then a sample of 30 from the remaining residuals, chosen at the ones
-with values that differ most from the residuals that precede them by ranking. In this way,
-the plots aim to preserve the tails of the distribution as well as the most important
-break points inbetween.
+To aid the interpretability of the plots, the residuals are scaled by the
+standard error of the residuals from the OLS estimate of the index.
+Additionally, to avoid over-plotting only a maximum of 50 residuals are
+shown on each plot. These are the 10 highest and lowest ranked residuals
+and then a sample of 30 from the remaining residuals, chosen at the ones
+with values that differ most from the residuals that precede them by ranking.
+In this way, the plots aim to preserve the tails of the distribution as well
+as the most important break points inbetween.
 }
 \examples{
 data("ethnicities")
-index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
+index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
+levels=c("LLSOA","MLSOA","LAD","RGN"))
 ci <- confint(index)
 catplot(ci)
 }

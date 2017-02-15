@@ -4,36 +4,43 @@
 \alias{confint.index}
 \title{Confidence intervals for the multilevel index}
 \usage{
-\method{confint}{index}(index, level = 0.95)
+\method{confint}{index}(object, parm, level = 0.95, ...)
 }
 \arguments{
-\item{index}{an object of class \code{index}: a multilevel index created using function
+\item{object}{an object of class \code{index}: a multilevel index created
+using function
 \code{\link{id}}}
 
+\item{parm}{NA}
+
 \item{level}{the confidence level required}
+
+\item{...}{other arguments}
 }
 \value{
-an object of class \code{confint}, a list of length equal to the number
-of levels in the index where each part of the list is a data frame giving the confidence
-interval for the location
+an object of class \code{confint}, a list of length equal to the
+number of levels in the index where each part of the list is a data frame
+giving the confidence interval for the location
 }
 \description{
-Calculates the confidence intervals for the residuals of the multilevel index at each level.
-These can then be visualised in a caterpillar plot.
+Calculates the confidence intervals for the residuals of the multilevel
+index at each level. These can then be visualised in a caterpillar plot.
 }
 \details{
-\code{confint.index} is a wrapper to \code{lme4::ranef(mlm, condVar = T)} and is used to
-calculate the confidence intervals for the locations and regions at each of the higher levels
-of the model. In this way, places with an usually high (or low) share of population group Y
-with respect to population group X can be identified, net of the effects of other levels
-of the model. The width of the confidence interval is adjusted for a test of difference
-between two means (see Statistical Rules of Thumb by Gerald van Belle, 2011, eq 2.18).
-A 95 per cent confidence interval, for example, extends to 1.39 times the standard error
-around the mean and not 1.96.
+\code{confint.index} is a wrapper to \code{lme4::ranef(mlm, condVar = TRUE)}
+and is used to calculate the confidence intervals for the locations and
+regions at each of the higher levels of the model. In this way, places with
+an usually high (or low) share of population group Y with respect to
+population group X can be identified, net of the effects of other levels
+of the model. The width of the confidence interval is adjusted for a test of
+difference between two means (see Statistical Rules of Thumb by Gerald van
+Belle, 2011, eq 2.18). A 95 per cent confidence interval, for example,
+extends to 1.39 times the standard error around the mean and not 1.96.
 }
 \examples{
 data("ethnicities")
-index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
+index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
+levels=c("LLSOA","MLSOA","LAD","RGN"))
 ci <- confint(index)
 catplot(ci)
 }

@@ -1,22 +1,26 @@
 #' Checkerboard
 #'
-#' A demonstration of how the Multilevel Index of Dissimilarity measures spatial clustering as
-#' well as unevenness
+#' A demonstration of how the Multilevel Index of Dissimilarity measures spatial
+#' clustering as well as unevenness
 #'
-#' A criticism of the standard Index of Dissimilarity (ID) is that it only measures one of the two
-#' principal dimensions of segregation - unevenness but not spatial clustering. Because of this,
-#' very different spatial patterns of segregation can generate the same ID score but the ID is
-#' unable to distinguish between them.
+#' A criticism of the standard Index of Dissimilarity (ID) is that it only
+#' measures one of the two principal dimensions of segregation - unevenness but
+#' not spatial clustering. Because of this, very different spatial patterns of
+#' segregation can generate the same ID score but the ID is unable to
+#' distinguish between them.
 #'
-#' In contrast, the multilevel index can detect the differences because different patterns
-#' (scales) of segregation change the percentage of the variance due to each level.
-#' The demonstation illustrates this using the classic example of a checkerboard.
+#' In contrast, the multilevel index can detect the differences because
+#' different patterns (scales) of segregation change the percentage of the
+#' variance due to each level. The demonstation illustrates this using the
+#' classic example of a checkerboard.
 
 
 checkerboard <- function() {
 
-  if(!requireNamespace("raster", quietly = TRUE)) stop("Requires the raster package to be installed")
-  if(!requireNamespace("sp", quietly = TRUE)) stop("Requires the sp package to be installed")
+  if(!requireNamespace("raster", quietly = TRUE))
+    stop("Requires the raster package to be installed")
+  if(!requireNamespace("sp", quietly = TRUE))
+    stop("Requires the sp package to be installed")
 
   x <- c(rep(c(1,0), times=8), rep(c(0,1), times=8))
   x <- matrix(x, nrow=16, ncol=16)
@@ -36,14 +40,16 @@ checkerboard <- function() {
   gridcodes <- data.frame(ID=1:n, TwoBy2 = ID2, FourBy4 = ID4, EightBy8 = ID8)
 
   grd <- raster::raster(x)
-  print(sp::spplot(grd, colorkey = FALSE, col.regions = colorRampPalette(c("white", "black"))))
+  print(sp::spplot(grd, colorkey = FALSE,
+                   col.regions = colorRampPalette(c("white", "black"))))
 
   X <- as.vector(t(x/sum(x)))
   Y <- as.vector(t(y/sum(y)))
   mydata <- data.frame(gridcodes, X, Y)
 
   cat("\nExample 1 (see plot for pattern)\n")
-  print(id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8")))
+  print(id(mydata, vars = c("Y","X"),
+           levels = c("TwoBy2", "FourBy4", "EightBy8")))
 
   invisible(readline(prompt="\nPress [enter] to continue"))
 
@@ -54,7 +60,8 @@ checkerboard <- function() {
   y <- abs(1-x)
 
   grd <- raster::raster(x)
-  print(sp::spplot(grd, colorkey=FALSE, col.regions = colorRampPalette(c("white", "black")),
+  print(sp::spplot(grd, colorkey=FALSE,
+                   col.regions = colorRampPalette(c("white", "black")),
                    border = "grey"))
 
   X <- as.vector(t(x/sum(x)))
@@ -62,7 +69,8 @@ checkerboard <- function() {
   mydata <- data.frame(gridcodes, X, Y)
 
   cat("\nExample 2 (see plot for pattern)\n")
-  print(id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8")))
+  print(id(mydata, vars = c("Y","X"),
+           levels = c("TwoBy2", "FourBy4", "EightBy8")))
 
   invisible(readline(prompt="\nPress [enter] to continue"))
 
@@ -73,7 +81,8 @@ checkerboard <- function() {
   y <- abs(1-x)
 
   grd <- raster::raster(x)
-  print(sp::spplot(grd, colorkey = FALSE, col.regions = colorRampPalette(c("white", "black")),
+  print(sp::spplot(grd, colorkey = FALSE,
+                   col.regions = colorRampPalette(c("white", "black")),
                    border = "grey"))
 
   X <- as.vector(t(x/sum(x)))
@@ -81,7 +90,8 @@ checkerboard <- function() {
   mydata <- data.frame(gridcodes, X, Y)
 
   cat("\nExample 3 (see plot for pattern)\n")
-  print(id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8")))
+  print(id(mydata, vars = c("Y","X"),
+           levels = c("TwoBy2", "FourBy4", "EightBy8")))
 
   invisible(readline(prompt="\nPress [enter] to continue"))
 
@@ -92,7 +102,8 @@ checkerboard <- function() {
   y <- abs(1-x)
 
   grd <- raster::raster(x)
-  print(sp::spplot(grd, colorkey = FALSE, col.regions = colorRampPalette(c("white", "black")),
+  print(sp::spplot(grd, colorkey = FALSE,
+                   col.regions = colorRampPalette(c("white", "black")),
                    border = "grey"))
 
   X <- as.vector(t(x/sum(x)))
@@ -100,7 +111,8 @@ checkerboard <- function() {
   mydata <- data.frame(gridcodes, X, Y)
 
   cat("\nExample 4 (see plot for pattern)\n")
-  print(id(mydata, vars = c("Y","X"), levels = c("TwoBy2", "FourBy4", "EightBy8")))
+  print(id(mydata, vars = c("Y","X"),
+           levels = c("TwoBy2", "FourBy4", "EightBy8")))
 
 
 }

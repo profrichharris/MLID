@@ -3,7 +3,7 @@
 ## also the holdback scores
 
 
-mid <- function(data, vars = c(1, 2), levels, expected = F, nsims = 100) {
+mid <- function(data, vars = c(1, 2), levels, expected = FALSE, nsims = 100) {
   if (is.character((levels))) {
     ifelse (all(levels %in% names(data)), levels <- match(levels, names(data)),
             stop("Higher level grouping variable not found"))
@@ -23,7 +23,8 @@ mid <- function(data, vars = c(1, 2), levels, expected = F, nsims = 100) {
   }
   mlm <- lme4::lmer(f, data=data, offset=x)
   attributes(id) <- list(ols = ols, vars = vv, levels = lvls,
-                         mlm = mlm, variance = varshare(mlm), holdback = holdback(mlm),
+                         mlm = mlm, variance = varshare(mlm),
+                         holdback = holdback(mlm),
                          data = df)
   class(id) <- "index"
   return(id)

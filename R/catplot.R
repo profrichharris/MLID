@@ -1,47 +1,52 @@
 #' Confidence intervals for the multilevel index
 #'
-#' Calculates the confidence intervals for the residuals of the multilevel index at each level.
-#' These can then be visualised in a caterpillar plot.
+#' Calculates the confidence intervals for the residuals of the multilevel
+#' index at each level. These can then be visualised in a caterpillar plot.
 #'
-#' \code{confint.index} is a wrapper to \code{lme4::ranef(mlm, condVar = T)} and is used to
-#' calculate the confidence intervals for the locations and regions at each of the higher levels
-#' of the model. In this way, places with an usually high (or low) share of population group Y
-#' with respect to population group X can be identified, net of the effects of other levels
-#' of the model. The width of the confidence interval is adjusted for a test of difference
-#' between two means (see Statistical Rules of Thumb by Gerald van Belle, 2011, eq 2.18).
-#' A 95 per cent confidence interval, for example, extends to 1.39 times the standard error
-#' around the mean and not 1.96.
+#' \code{confint.index} is a wrapper to \code{lme4::ranef(mlm, condVar = TRUE)}
+#' and is used to calculate the confidence intervals for the locations and
+#' regions at each of the higher levels of the model. In this way, places with
+#' an usually high (or low) share of population group Y with respect to
+#' population group X can be identified, net of the effects of other levels
+#' of the model. The width of the confidence interval is adjusted for a test of
+#' difference between two means (see Statistical Rules of Thumb by Gerald van
+#' Belle, 2011, eq 2.18). A 95 per cent confidence interval, for example,
+#' extends to 1.39 times the standard error around the mean and not 1.96.
 #'
-#' @param index an object of class \code{index}: a multilevel index created using function
+#' @param object an object of class \code{index}: a multilevel index created
+#' using function
 #' \code{\link{id}}
+#' @param parm NA
 #' @param level the confidence level required
-#' @return an object of class \code{confint}, a list of length equal to the number
-#' of levels in the index where each part of the list is a data frame giving the confidence
-#' interval for the location
+#' @param ... other arguments
+#' @return an object of class \code{confint}, a list of length equal to the
+#' number of levels in the index where each part of the list is a data frame
+#' giving the confidence interval for the location
 #' @examples
 #' data("ethnicities")
-#' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
+#' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
+#' levels=c("LLSOA","MLSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
 #' @seealso \code{\link{catplot}} \code{\link{id}} \code{\link[lme4]{ranef}}
 
 
-confint.index <- function(index, level = 0.95) {
-  if (class(index) != "index")
+confint.index <- function(object, parm, level = 0.95, ...) {
+  if (class(object) != "index")
     stop("Object is not of class index")
-  mlm <- attr(index, "mlm")
+  mlm <- attr(object, "mlm")
   if (is.null(mlm))
     stop("Object is not multilevel")
 
-  vv <- lme4::ranef(mlm, condVar = T)
+  vv <- lme4::ranef(mlm, condVar = TRUE)
 
   # Statistical Rules of Thumb, Gerald van Belle (2011), eq 2.18
   zz <- (1 - level) / 2 + level
   zz <- qnorm(zz) * sqrt(2) / 2
 
-  lvls <- 1:length(attr(index, "levels"))
-  sigm <- sigma(attr(index, "ols"))
-  vr <- attr(index, "variance")
+  lvls <- 1:length(attr(object, "levels"))
+  sigm <- sigma(attr(object, "ols"))
+  vr <- attr(object, "variance")
 
   cint <- lapply(lvls, function(x,
                                 v = vv,
@@ -58,7 +63,7 @@ confint.index <- function(index, level = 0.95) {
     attr(df, "variance") <- vrc[x+1]
     return(df)
   })
-  names(cint) <- attr(index, "levels")
+  names(cint) <- attr(object, "levels")
   class(cint) <- "confintindex"
   return(cint)
 
@@ -67,41 +72,47 @@ confint.index <- function(index, level = 0.95) {
 
 #' Caterpillar plot
 #'
-#' Draws a series of caterpillar plots, showing the residuals from the multilevel model
-#' at each level and the estimates of their confidence interval
+#' Draws a series of caterpillar plots, showing the residuals from the
+#' multilevel model at each level and the estimates of their confidence interval
 #'
-#' A caterpillar plot is a visual way of looking at the variance of the residuals at each
-#' level of a multilevel model. It can be used to see which places are contributing most to the
-#' Index of Dissimilarity net of the effects of other scales.
+#' A caterpillar plot is a visual way of looking at the variance of the
+#' residuals at each level of a multilevel model. It can be used to see which
+#' places are contributing most to the Index of Dissimilarity net of the
+#' effects of other scales.
 #'
-#' To aid the interpretability of the plots, the residuals are scaled by the standard error
-#' of the residuals from the OLS estimate of the index. Additionally, to avoid over-plotting
-#' only a maximum of 50 residuals are shown on each plot. These are the 10 highest and lowest
-#' ranked residuals and then a sample of 30 from the remaining residuals, chosen at the ones
-#' with values that differ most from the residuals that precede them by ranking. In this way,
-#' the plots aim to preserve the tails of the distribution as well as the most important
-#' break points inbetween.
+#' To aid the interpretability of the plots, the residuals are scaled by the
+#' standard error of the residuals from the OLS estimate of the index.
+#' Additionally, to avoid over-plotting only a maximum of 50 residuals are
+#' shown on each plot. These are the 10 highest and lowest ranked residuals
+#' and then a sample of 30 from the remaining residuals, chosen at the ones
+#' with values that differ most from the residuals that precede them by ranking.
+#' In this way, the plots aim to preserve the tails of the distribution as well
+#' as the most important break points inbetween.
 #'
-#' @param confint an object containing the output from function \code{\link{confint.index}}
-#' @param labels default is TRUE. If set to false, suppresses the automatic labelling
-#' of residuals on the plots with a confidence interval that does not overlap with any other
+#' @param confint an object containing the output from function
+#' \code{\link{confint.index}}
+#' @param labels default is TRUE. If set to false, suppresses the automatic
+#' labelling of residuals on the plots with a confidence interval that does not
+#' overlap with any other
 #' @examples
 #' data("ethnicities")
-#' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
+#' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
+#' levels=c("LLSOA","MLSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
 #' @seealso \code{\link{confint.index}} \code{\link{id}}
 
-catplot <- function(confint, labels = T) {
+catplot <- function(confint, labels = TRUE) {
 
-  if(class(confint) != "confintindex") stop("Object is of wrong type. Use output from confint.index()")
+  if(class(confint) != "confintindex")
+    stop("Object is of wrong type. Use output from confint.index()")
   plot.confintindex(confint, labels)
 
 }
 
 
-plot.confintindex <- function(confint, labels = T) {
-  k <- length(confint)
+plot.confintindex <- function(x, ann = TRUE, ...) {
+  k <- length(x)
   grd <- c(0, 0)
   grd[1] <- which.min(abs(1:20 - sqrt(k)))
   grd[2] <- ceiling(k / grd[1])
@@ -110,9 +121,9 @@ plot.confintindex <- function(confint, labels = T) {
 
   par(mfrow = c(grd[1], grd[2]))
 
-  lapply(confint, function(y) {
+  lapply(x, function(y) {
 
-    y <- y[order(y[, 1], decreasing = T), ]
+    y <- y[order(y[, 1], decreasing = TRUE), ]
     n <- nrow(y)
     y$rank <- 1:n
 
@@ -155,11 +166,11 @@ plot.confintindex <- function(confint, labels = T) {
         code = 3
       ))
     xx <- 2:(n - 1)
-    subset <- unlist(lapply(xx, function(x, yy = y)
-      ifelse(yy$lwr[x] > yy$upr[x + 1] &
-               yy$upr[x] < yy$lwr[x - 1], T, F)))
+    subset <- unlist(lapply(xx, function(z, yy = y)
+      ifelse(yy$lwr[z] > yy$upr[z + 1] &
+               yy$upr[z] < yy$lwr[z - 1], TRUE, FALSE)))
     subset <- c(y$lwr[1] > y$upr[2], subset, y$upr[n] < y$lwr[n - 1])
-    if (length(subset[subset]) > 0 & labels)
+    if (length(subset[subset]) > 0 & ann)
       text(
         x = (1:n)[subset],
         y = y$mn[subset],
@@ -168,7 +179,7 @@ plot.confintindex <- function(confint, labels = T) {
         pos = ifelse(y$i < median(y$i), 4, 2)[subset]
       )
     txt <- paste0(attr(y, "variance"),"% of variance")
-    text(n, 0.9*max(y[, 3]), txt, pos = 2, cex = 0.7, offset = 0)
+    if (ann) text(n, 0.9*max(y[, 3]), txt, pos = 2, cex = 0.7, offset = 0)
   })
   return()
 

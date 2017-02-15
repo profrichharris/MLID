@@ -1,32 +1,39 @@
 #' Predicted index values
 #'
-#' Predicted values based on the contribution of chosen places to the overall index
+#' Predicted values based on the contribution of chosen places to the overall
+#' index
 #'
 #' \code{predict.index} produces predicted values for the index of dissimilarity, obtained under
 #' three scenarios. These are:
 #' \itemize{
-#'   \item if the (residual) effects for the chosen higher-level places are set to zero
+#'   \item if the (residual) effects for the chosen higher-level places are set
+#'   to zero
 #'   \item if the shares of the two population groups are equal everywhere
 #'   except for the chosen places
 #'   \item if all but the chosen places are omitted from the data and the index
-#'   recalculated using only those that remain (it is the ID for the chosen places alone)
+#'   recalculated using only those that remain (it is the ID for the chosen
+#'   places alone)
 #' }
 #' The predictions also include:
 #' \itemize{
 #'    \item the impact of the chosen places upon the overall ID, where a value
-#'    over 100 indicates a group of neighbourhoods with a disproportionately high impact on the ID
-#'    (in the same way that \code{\link{impacts}} calculates it)
-#'    \item an R-squared value. This is the proportion of the total variation in (Y - X) that is
-#'    due to the chosen places, where (Y - X) are the differences between the share of population
-#'    group Y and the share of population group X that are observed in each neighbourhood.
+#'    over 100 indicates a group of neighbourhoods with a disproportionately
+#'    high impact on the ID (in the same way that \code{\link{impacts}}
+#'    calculates it)
+#'    \item an R-squared value. This is the proportion of the total variation in
+#'    (Y - X) that is due to the chosen places, where (Y - X) are the
+#'    differences between the share of population group Y and the share of
+#'    population group X that are observed in each neighbourhood.
 #' }
-#' @param index an object of class \code{index}: a multilevel index created using function
-#' \code{\link{id}}
-#' @param places a character vector containing the names of the places in any of the
-#' higher-level geographies for which the predictions will be made
+#' @param object an object of class \code{index}: a multilevel index created
+#' using function \code{\link{id}}
+#' @param places a character vector containing the names of the places in any of
+#' the higher-level geographies for which the predictions will be made
+#' @param ... additional arguments (ignored)
 #' @examples
 #' data("ethnicities")
-#' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), levels=c("LLSOA","MLSOA","LAD","RGN"))
+#' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
+#' levels=c("LLSOA","MLSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
 #' # Note Tower Hamlets and Newham. Obtain the predictions for them:
@@ -35,13 +42,13 @@
 #' predict(index, c("Tower Hamlets","Newham"))
 #' @seealso \code{\link{residuals.index}}
 
-predict.index <- function(index, places) {
+predict.index <- function(object, places, ...) {
 
-  mlm <- attr(index, "mlm")
+  mlm <- attr(object, "mlm")
   data <- slot(mlm, "frame")
-  rawdata <- slot(index, "data")
+  rawdata <- slot(object, "data")
   rr <- rvals(mlm)
-  id <- index[1]
+  id <- object[1]
 
   drop <- lapply(places, function(x, df = data, rr = rr) {
     k <- which(apply(df, 2, function(y) any(y == x)))
@@ -59,7 +66,7 @@ predict.index <- function(index, places) {
     j <- drop[[i]][[2]]
     rr[j, k] <- 0
     dummies[j, k] <- 1
-    subset[j] <- T
+    subset[j] <- TRUE
 
   }
 
@@ -84,14 +91,14 @@ predict.index <- function(index, places) {
   attr(df, "Rsq") <- round(summary(ols)$r.squared, 3)
   attr(df, "impact") <- round(impact, 0)
   attr(df, "places") <- places
-  attr(df, "vars") <- attr(index, "vars")
+  attr(df, "vars") <- attr(object, "vars")
   class(df) <- "predictindex"
   return(df)
 
 }
 
 
-print.predictindex <- function(x) {
+print.predictindex <- function(x, ...) {
   cat(paste(attr(x, "vars")[1:2], collapse=" ~ "),"\n")
   df <- matrix(unlist(x), ncol = length(x))
   colnames(df) <- names(x)

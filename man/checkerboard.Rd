@@ -7,16 +7,18 @@
 checkerboard()
 }
 \description{
-A demonstration of how the Multilevel Index of Dissimilarity measures spatial clustering as
-well as unevenness
+A demonstration of how the Multilevel Index of Dissimilarity measures spatial
+clustering as well as unevenness
 }
 \details{
-A criticism of the standard Index of Dissimilarity (ID) is that it only measures one of the two
-principal dimensions of segregation - unevenness but not spatial clustering. Because of this,
-very different spatial patterns of segregation can generate the same ID score but the ID is
-unable to distinguish between them.
+A criticism of the standard Index of Dissimilarity (ID) is that it only
+measures one of the two principal dimensions of segregation - unevenness but
+not spatial clustering. Because of this, very different spatial patterns of
+segregation can generate the same ID score but the ID is unable to
+distinguish between them.
 
-In contrast, the multilevel index can detect the differences because different patterns
-(scales) of segregation change the percentage of the variance due to each level.
-The demonstation illustrates this using the classic example of a checkerboard.
+In contrast, the multilevel index can detect the differences because
+different patterns (scales) of segregation change the percentage of the
+variance due to each level. The demonstation illustrates this using the
+classic example of a checkerboard.
 }
