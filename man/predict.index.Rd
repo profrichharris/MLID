@@ -7,21 +7,21 @@
 \method{predict}{index}(object, places, ...)
 }
 \arguments{
+\item{object}{an object of class \code{index}: a multilevel index created
+using function \code{\link{id}}}
+
 \item{places}{a character vector containing the names of the places in any of
 the higher-level geographies for which the predictions will be made}
 
 \item{...}{additional arguments (ignored)}
-
-\item{index}{an object of class \code{index}: a multilevel index created
-using function \code{\link{id}}}
 }
 \description{
 Predicted values based on the contribution of chosen places to the overall
 index
 }
 \details{
-\code{predict.index} produces predicted values for the index of dissimilarity, obtained under
-three scenarios. These are:
+\code{predict.index} produces predicted values for the index of dissimilarity
+obtained under three scenarios. These are:
 \itemize{
   \item if the (residual) effects for the chosen higher-level places are set
   to zero

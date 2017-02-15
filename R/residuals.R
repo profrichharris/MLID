@@ -45,7 +45,7 @@ residuals.index <- function(object, ...) {
   if (!is.null(attr(object, "mlm"))) {
 
     vv <- attr(object, "mlm")
-    return(rvals(vv))
+    return(.rvals(vv))
 
   } else {
 
@@ -71,7 +71,7 @@ rstudent.index <- function(model, ...) {
 }
 
 
-rvals <- function(mlm) {
+.rvals <- function(mlm) {
 
   resids <- residuals(mlm)
   rf <- lme4::ranef(mlm)

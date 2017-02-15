@@ -83,13 +83,13 @@ id <- function(data, vars, levels = NA, expected = FALSE, nsims = 100) {
   }
   if (!all(sapply(data[, vars], is.numeric))) stop("Variable is not numeric")
   if (anyNA(data[,vars])) stop("Data contain NAs")
-  ifelse (!is.na(levels), id <- mid(data, vars, levels, expected, nsims),
-            id <- idx(data, vars, expected, nsims))
+  ifelse (!is.na(levels), id <- .mid(data, vars, levels, expected, nsims),
+            id <- .idx(data, vars, expected, nsims))
   return(id)
 }
 
 
-idx <- function(data, vars, expected = FALSE, nsims = 100,
+.idx <- function(data, vars, expected = FALSE, nsims = 100,
                 include.model = FALSE) {
   Y <- data[, vars[1]]
   X <- data[, vars[2]]
@@ -105,7 +105,7 @@ idx <- function(data, vars, expected = FALSE, nsims = 100,
       warning("Calculated the expected value but the total population of each
               area was not specified")
     }
-    id <- c(id, id.sim(X, Y, N, nsims))
+    id <- c(id, .id.sim(X, Y, N, nsims))
   }
   attributes(id) <- list(ols = ols, vars = names(data)[vars],
                          data = data.frame(Y, X))
@@ -114,7 +114,7 @@ idx <- function(data, vars, expected = FALSE, nsims = 100,
 }
 
 
-id.sim <- function(X, Y, N, nsims) {
+.id.sim <- function(X, Y, N, nsims) {
   k <- length(X)
   pY <- sum(Y) / sum(N)
   pX <- sum(X) / sum(N)

@@ -3,13 +3,13 @@
 ## also the holdback scores
 
 
-mid <- function(data, vars = c(1, 2), levels, expected = FALSE, nsims = 100) {
+.mid <- function(data, vars = c(1, 2), levels, expected = FALSE, nsims = 100) {
   if (is.character((levels))) {
     ifelse (all(levels %in% names(data)), levels <- match(levels, names(data)),
             stop("Higher level grouping variable not found"))
   }
   if (anyNA(data[,levels])) stop("Data contain NAs")
-  id <- idx(data, vars, expected, nsims)
+  id <- .idx(data, vars, expected, nsims)
   ols <- attr(id, "ols")
   vv <- attr(id, "vars")
   df <- attr(id, "data")
@@ -23,15 +23,15 @@ mid <- function(data, vars = c(1, 2), levels, expected = FALSE, nsims = 100) {
   }
   mlm <- lme4::lmer(f, data=data, offset=x)
   attributes(id) <- list(ols = ols, vars = vv, levels = lvls,
-                         mlm = mlm, variance = varshare(mlm),
-                         holdback = holdback(mlm),
+                         mlm = mlm, variance = .varshare(mlm),
+                         holdback = .holdback(mlm),
                          data = df)
   class(id) <- "index"
   return(id)
 }
 
 
-mlvar <- function(mlm) {
+.mlvar <- function(mlm) {
 
   vv <- lme4::VarCorr(mlm)
   res <- attr(vv, "sc")
@@ -48,9 +48,9 @@ mlvar <- function(mlm) {
 }
 
 
-varshare <- function(mlm, mlvar=NULL) {
+.varshare <- function(mlm) {
 
-  if(is.null(mlvar)) mlvar <- mlvar(mlm)
+  mlvar <- .mlvar(mlm)
   mlvar <- mlvar/sum(mlvar)*100
   return(round(mlvar,2))
 
@@ -58,8 +58,8 @@ varshare <- function(mlm, mlvar=NULL) {
 
 
 
-holdback <- function(mlm=NULL, rvals=NULL) {
-  if(is.null(rvals)) rvals <- rvals(mlm)
+.holdback <- function(mlm=NULL) {
+  rvals <- .rvals(mlm)
   k <- ncol(rvals)
   hb <- rep(NA, k)
   rwsm <- rowSums(rvals)

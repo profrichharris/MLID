@@ -91,8 +91,8 @@ confint.index <- function(object, parm, level = 0.95, ...) {
 #'
 #' @param confint an object containing the output from function
 #' \code{\link{confint.index}}
-#' @param labels default is TRUE. If set to false, suppresses the automatic
-#' labelling of residuals on the plots with a confidence interval that does not
+#' @param ann default is TRUE. If set to false, suppresses the automatic
+#' annotation of residuals on the plots with a confidence interval that does not
 #' overlap with any other
 #' @examples
 #' data("ethnicities")
@@ -102,11 +102,11 @@ confint.index <- function(object, parm, level = 0.95, ...) {
 #' catplot(ci)
 #' @seealso \code{\link{confint.index}} \code{\link{id}}
 
-catplot <- function(confint, labels = TRUE) {
+catplot <- function(confint, ann = TRUE) {
 
   if(class(confint) != "confintindex")
     stop("Object is of wrong type. Use output from confint.index()")
-  plot.confintindex(confint, labels)
+  plot.confintindex(confint, ann)
 
 }
 
@@ -130,7 +130,7 @@ plot.confintindex <- function(x, ann = TRUE, ...) {
     if (n > 50) {
       ymid <- y[11:(n - 10),]
       while (nrow(ymid) > 30)
-        ymid <- thin(ymid)
+        ymid <- .thin(ymid)
       y <- rbind(y[1:10,], ymid, y[(n - 9):n,])
     }
 
@@ -187,7 +187,7 @@ plot.confintindex <- function(x, ann = TRUE, ...) {
 
 
 
-thin <- function(y) {
+.thin <- function(y) {
 
   d <- abs(diff(y$mn))
   y <- y[d > quantile(d, probs = 0.01),]

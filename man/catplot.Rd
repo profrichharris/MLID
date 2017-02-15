@@ -4,14 +4,14 @@
 \alias{catplot}
 \title{Caterpillar plot}
 \usage{
-catplot(confint, labels = TRUE)
+catplot(confint, ann = TRUE)
 }
 \arguments{
 \item{confint}{an object containing the output from function
 \code{\link{confint.index}}}
 
-\item{labels}{default is TRUE. If set to false, suppresses the automatic
-labelling of residuals on the plots with a confidence interval that does not
+\item{ann}{default is TRUE. If set to false, suppresses the automatic
+annotation of residuals on the plots with a confidence interval that does not
 overlap with any other}
 }
 \description{

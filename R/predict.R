@@ -3,8 +3,8 @@
 #' Predicted values based on the contribution of chosen places to the overall
 #' index
 #'
-#' \code{predict.index} produces predicted values for the index of dissimilarity, obtained under
-#' three scenarios. These are:
+#' \code{predict.index} produces predicted values for the index of dissimilarity
+#' obtained under three scenarios. These are:
 #' \itemize{
 #'   \item if the (residual) effects for the chosen higher-level places are set
 #'   to zero
@@ -47,7 +47,7 @@ predict.index <- function(object, places, ...) {
   mlm <- attr(object, "mlm")
   data <- slot(mlm, "frame")
   rawdata <- slot(object, "data")
-  rr <- rvals(mlm)
+  rr <- .rvals(mlm)
   id <- object[1]
 
   drop <- lapply(places, function(x, df = data, rr = rr) {
@@ -75,7 +75,7 @@ predict.index <- function(object, places, ...) {
   ols <- lm(data$y ~ 0, offset = data$"(offset)", subset = subset)
   newid2 <- 0.5 * sum(abs(residuals(ols)))
 
-  newid3 <- idx(rawdata[subset,], c(1, 2))[1]
+  newid3 <- .idx(rawdata[subset,], c(1, 2))[1]
 
   ols <- lm(data$y ~ 0 + dummies, offset = data$"(offset)")
 

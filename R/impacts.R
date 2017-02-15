@@ -78,12 +78,12 @@ impacts <- function(data, vars, levels) {
             stop("Higher level grouping variable not found"))
   }
 
-  id <- idx(data, vars)
+  id <- .idx(data, vars)
   rr <- residuals(id)
   se <- sigma(attr(id, "ols"))
 
   levels <- as.list(levels)
-  calcs <- lapply(levels, impact.calcs, data, rr, se)
+  calcs <- lapply(levels, .impact.calcs, data, rr, se)
   names(calcs) <- names(data[, unlist(levels)])
   attr(calcs, "vars") <- paste(names(data[, vars]), collapse=" ~ ")
   class(calcs) <- "impacts"
@@ -93,7 +93,7 @@ impacts <- function(data, vars, levels) {
 
 
 
-impact.calcs <- function(col, data, rr, se) {
+.impact.calcs <- function(col, data, rr, se) {
 
   t1 <- tapply(abs(rr), data[,col], sum) / sum(abs(rr)) * 100
   t2 <- tapply(abs(rr), data[,col], length) / length(rr) * 100
