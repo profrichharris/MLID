@@ -158,3 +158,17 @@ head.impacts <- function(x, n = 5, ...) {
 }
 
 
+#' Print values
+#'
+#' Prints the impact values
+#'
+#' @param x output from \code{\link{impacts}}
+#' @param ... other arguments
+
+
+print.impacts <- function(x, ...) {
+  nms <- names(x)
+  attributes(x) <- NULL
+  names(x) <- nms
+  print(x)
+}
