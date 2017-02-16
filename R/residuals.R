@@ -1,9 +1,9 @@
 #' Extract Model Residuals
 #'
-#' For the ndex of dissimilarity (ID), the residuals are the differences
+#' For the index of dissimilarity (ID), the residuals are the differences
 #' between the share of the Y population and the share of the X population per
 #' neighbourhood. For the multilevel index, the residuals are estimated at and
-#' partitioned betweeneach level of the model.
+#' partitioned between each level of the model.
 #'
 #' @param object an object of class \code{index}
 #' @param ... other arguments

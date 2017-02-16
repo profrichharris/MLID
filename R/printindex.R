@@ -4,6 +4,7 @@
 #'
 #' @param x output from \code{\link{id}}
 #' @param ... other arguments
+#' @seealso \code{\link{id}} \code{\link{holdback}}
 
 print.index <- function(x, ...) {
   cat(paste(attr(x, "vars")[1:2], collapse=" ~ "),"\n")

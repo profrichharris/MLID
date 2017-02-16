@@ -14,3 +14,6 @@
 \description{
 Prints output from the single or multi-level index of dissimilarity
 }
+\seealso{
+\code{\link{id}} \code{\link{holdback}}
+}

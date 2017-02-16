@@ -3,16 +3,37 @@
 #' \code{id} Returns either the standard index of dissimilarity (ID) or its
 #' multilevel equivalent
 #'
-#' If \code{y} is the number of population group Y living in each neighbourhood
-#' and \code{x} is the number of population group X then \code{id} measures how
+#' If \code{Y} is the number of population group Y living in each neighbourhood
+#' and \code{X} is the number of population group X then \code{id} measures how
 #' unevenly distributed are the two groups relative to one another and is a
 #' measure of segregation. In addition, for geographically hierarchichal data,
 #' scale effects may be explored to examine the scale of geographical
 #' clustering.
 #'
-#' \code{print(index)} displays the ID value, the expected value of the ID
-#' under randomisation (NA if not calculated), and, for a multilevel model,
-#' the percentage share of the variance at each level and the holdback scores.
+#' The method works by treating the calculation of the ID as a
+#' regression problem: if \code{Y} is recalculated as the share per
+#' neighbourhood of the total count of population group Y
+#' (i.e. \code{Y <- Y / sum(Y)}) and \code{X} is recalculated in the same way
+#' for X, then fitting \code{ols <- lm(Y ~ 0, offset = X)} generates a set of
+#' residuals, \code{e <- residuals(ols)} where each residual is the difference
+#' in the share of Y and the share of X per neighbourhood, and the sum of the
+#' absolute of those residuals can be used to obtain the id:
+#' \code{id <- 0.5 * sum(abs(e))}.
+#'
+#' The advantage of calculating the ID in this
+#' way is that it can be extended to consider geographic hierarchies, where
+#' neighbourhoods at the base level can be grouped into larger regions at
+#' the next level, and so forth. Then, for the multilevel index,
+#' the residuals are estimated at and partitioned between each level of the
+#' model \emph{net} of the other levels, allowing scale effects to be
+#' explored.
+#'
+#' \code{print(index)} displays the ID value, the expected value of
+#' the ID under randomisation (NA if not calculated), and, for a multilevel
+#' model, the percentage share of the total variance due to each level
+#' (a measure of the geographical scale of segregation: see the examples given
+#' by \code{\link{checkerboard}}) and the holdback scores -
+#' see \code{\link{holdback}}
 #'
 #' @param data a data frame with \code{ncol(data) >= 2}. Each row of the data
 #' represents a neighbourhood or some other areal unit for which counts of
@@ -46,8 +67,10 @@
 #'    regression used to calculate the ID. Useful for identifying significant
 #'    residuals (see Example below)
 #'    \item \code{attr(x, "vars")} the names of Y and X in \code{data}
+#'    \item \code{attr(x, "data")} a data frame with the population counts
+#'    for Y and X
 #' }
-#' and, for a multilevel model,
+#' and also, for a multilevel model,
 #' \itemize{
 #'    \item \code{attr(index, "mlm")} an object of class \code{lmerMod}.
 #'    Fitted using \code{\link[lme4]{lmer}}
@@ -55,8 +78,8 @@
 #'    due to each level of the model. This indicates the scale at which the
 #'    segregation is most prominent
 #'    \item \code{attr(index, "holdback")} records the percentage change in the
-#'    ID that occurs if, at each level, its contribution to the ID is heldback
-#'    (set to zero)
+#'    ID that occurs if, at each level, its contribution to the ID \emph{net} of
+#'    other levels is heldback (set to zero)
 #' }
 #' @examples
 #' data(ethnicities)
@@ -76,7 +99,8 @@
 #' levels=c("LSOA","MSOA","LAD","RGN"))
 #' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
 #' levels=c("LSOA","MSOA","LAD","RGN"), expected = TRUE)
-#' @seealso \code{\link{residuals.index}} \code{\link[lme4]{lmer}}
+#' @seealso \code{\link{checkerboard}} \code{\link{print.index}}
+#' \code{\link{holdback}} \code{\link{residuals.index}} \code{\link[lme4]{lmer}}
 #'
 #' Harris R (2016) Measuring the scales of segregation: Looking at the
 #' residential separation of White British and other school children in England
