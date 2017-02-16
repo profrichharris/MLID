@@ -15,6 +15,7 @@ S3method(rstandard, index)
 S3method(rstudent, index)
 S3method(head, impacts)
 S3method(tail, impacts)
+S3method(print, impacts)
 
 
 
