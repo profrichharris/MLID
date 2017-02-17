@@ -33,7 +33,7 @@
 #' @examples
 #' data(ethnicities)
 #' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-#' levels=c("LSOA","MSOA","LAD","RGN"))
+#' levels = c("LSOA","MSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
 #' # Note Tower Hamlets and Newham. Obtain the predictions for them:
@@ -49,6 +49,7 @@ predict.index <- function(object, places, ...) {
   rawdata <- slot(object, "data")
   rr <- .rvals(mlm)
   id <- object[1]
+  if(any(sapply(places, is.numeric))) warning("Places contain numeric data")
 
   drop <- lapply(places, function(x, df = data, rr = rr) {
     k <- which(apply(df, 2, function(y) any(y == x)))

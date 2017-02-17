@@ -24,7 +24,7 @@
 #'
 #' # Residuals for a multilevel index
 #' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-#' levels=c("LSOA","MSOA","LAD","RGN"))
+#' levels = c("LSOA","MSOA","LAD","RGN"))
 #' resids <- residuals(index)
 #' head(resids)
 #' # Again, the ID can be derived from the residuals

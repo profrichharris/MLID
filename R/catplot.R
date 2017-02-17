@@ -25,7 +25,7 @@
 #' @examples
 #' data(ethnicities)
 #' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-#' levels=c("LSOA","MSOA","LAD","RGN"))
+#' levels = c("LSOA","MSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
 #' @seealso \code{\link{catplot}} \code{\link{id}} \code{\link[lme4]{ranef}}
@@ -102,7 +102,7 @@ confint.index <- function(object, parm, level = 0.95, ...) {
 #' @examples
 #' data("ethnicities")
 #' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-#' levels=c("LSOA","MSOA","LAD","RGN"))
+#' levels = c("LSOA","MSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
 #' # Plots for all levels above the base level

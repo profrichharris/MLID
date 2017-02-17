@@ -41,7 +41,7 @@ will not add up to 100% because the base level is not presented.
 \examples{
 data("ethnicities")
 index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-levels=c("LSOA","MSOA","LAD","RGN"))
+levels = c("LSOA","MSOA","LAD","RGN"))
 ci <- confint(index)
 catplot(ci)
 # Plots for all levels above the base level

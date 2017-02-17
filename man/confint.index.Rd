@@ -40,7 +40,7 @@ extends to 1.39 times the standard error around the mean and not 1.96.
 \examples{
 data(ethnicities)
 index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-levels=c("LSOA","MSOA","LAD","RGN"))
+levels = c("LSOA","MSOA","LAD","RGN"))
 ci <- confint(index)
 catplot(ci)
 }

@@ -36,7 +36,7 @@ to explore how the index changes with the scale of analysis.
 \examples{
 data(ethnicities)
 head(ethnicities)
-id(ethnicities, vars=c("Arab","Other","Persons"), expected = TRUE)
+id(ethnicities, vars = c("Arab","Other","Persons"), expected = TRUE)
 # the expected value is very high relative to the ID
 
 aggdata <- sumup(ethnicities, sumby = "LSOA", omit = "OA")
