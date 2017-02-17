@@ -1,6 +1,6 @@
 #' (Multilevel) index of dissimilarity
 #'
-#' \code{id} Returns either the standard index of dissimilarity (ID) or its
+#' Returns either the standard index of dissimilarity (ID) or its
 #' multilevel equivalent
 #'
 #' If \code{Y} is the number of population group Y living in each neighbourhood
@@ -57,6 +57,8 @@
 #' as \code{sum(X + Y)}.
 #' @param nsims a vector, the number of random draws to be used for calculating
 #' the expected value. Default is 100.
+#' @param omit (optional) a character vector containing the names of places to
+#' search for in the data and to omit from the model
 #' @return an object of class \code{index}. This is a value between zero and one
 #' where 0 implies no segreation, and 1 means 'complete segregation' - wherever
 #' group Y is located, X is not (and vice versa). If \code{expected = TRUE} the
@@ -94,11 +96,14 @@
 #' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
 #' expected = TRUE)
 #'
-#' # A multilevel model
+#' # Multilevel models
 #' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-#' levels=c("LSOA","MSOA","LAD","RGN"))
+#' levels = c("LSOA","MSOA","LAD","RGN"))
 #' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
-#' levels=c("LSOA","MSOA","LAD","RGN"), expected = TRUE)
+#' levels = c("LSOA","MSOA","LAD","RGN"), expected = TRUE)
+#' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
+#' levels = c("LSOA","MSOA","LAD","RGN"), omit = c("Tower Hamlets", "Newham")
+#'
 #' @seealso \code{\link{checkerboard}} \code{\link{print.index}}
 #' \code{\link{holdback}} \code{\link{residuals.index}} \code{\link[lme4]{lmer}}
 #'
@@ -106,13 +111,26 @@
 #' residential separation of White British and other school children in England
 #' using a multilevel index of dissimilarity \url{http://bit.ly/2lQ4r0n}
 
-id <- function(data, vars, levels = NA, expected = FALSE, nsims = 100) {
+id <- function(data, vars, levels = NA, expected = FALSE,
+               nsims = 100, omit = NULL) {
   if (is.character((vars))) {
     ifelse (all(vars %in% names(data)), vars <- match(vars, names(data)),
                                           stop("Variable not found"))
   }
   if (!all(sapply(data[, vars], is.numeric))) stop("Variable is not numeric")
   if (anyNA(data[,vars])) stop("Data contain NAs")
+  if (!is.null(omit)) {
+    if(any(sapply(omit, is.numeric))) warning("Places to omit include
+                                              numeric data")
+    drop <- lapply(omit, function(x, df = data) {
+      k <- which(apply(df, 2, function(y) any(y == x)))
+      if(length(k) == 0) stop("Places to omit not found")
+      j <- which(df[, k] == x)
+      return(j)
+    })
+    drop <- unlist(drop)
+    data <- data[-drop,]
+  }
   ifelse (!is.na(levels), id <- .mid(data, vars, levels, expected, nsims),
             id <- .idx(data, vars, expected, nsims))
   return(id)

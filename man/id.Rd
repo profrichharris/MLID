@@ -4,7 +4,7 @@
 \alias{id}
 \title{(Multilevel) index of dissimilarity}
 \usage{
-id(data, vars, levels = NA, expected = FALSE, nsims = 100)
+id(data, vars, levels = NA, expected = FALSE, nsims = 100, omit = NULL)
 }
 \arguments{
 \item{data}{a data frame with \code{ncol(data) >= 2}. Each row of the data
@@ -33,6 +33,9 @@ as \code{sum(X + Y)}.}
 
 \item{nsims}{a vector, the number of random draws to be used for calculating
 the expected value. Default is 100.}
+
+\item{omit}{(optional) a character vector containing the names of places to
+search for in the data and to omit from the model}
 }
 \value{
 an object of class \code{index}. This is a value between zero and one
@@ -61,7 +64,7 @@ and also, for a multilevel model,
 }
 }
 \description{
-\code{id} Returns either the standard index of dissimilarity (ID) or its
+Returns either the standard index of dissimilarity (ID) or its
 multilevel equivalent
 }
 \details{
@@ -110,11 +113,14 @@ id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), expected = TRUE)
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
 expected = TRUE)
 
-# A multilevel model
+# Multilevel models
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-levels=c("LSOA","MSOA","LAD","RGN"))
+levels = c("LSOA","MSOA","LAD","RGN"))
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
-levels=c("LSOA","MSOA","LAD","RGN"), expected = TRUE)
+levels = c("LSOA","MSOA","LAD","RGN"), expected = TRUE)
+id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
+levels = c("LSOA","MSOA","LAD","RGN"), omit = c("Tower Hamlets", "Newham")
+
 }
 \seealso{
 \code{\link{checkerboard}} \code{\link{print.index}}
