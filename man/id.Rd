@@ -35,7 +35,7 @@ as \code{sum(X + Y)}.}
 the expected value. Default is 100.}
 
 \item{omit}{(optional) a character vector containing the names of places to
-search for in the data and to omit from the model}
+search for in the data and to omit from the calculations}
 }
 \value{
 an object of class \code{index}. This is a value between zero and one
@@ -119,7 +119,7 @@ levels = c("LSOA","MSOA","LAD","RGN"))
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
 levels = c("LSOA","MSOA","LAD","RGN"), expected = TRUE)
 id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-levels = c("LSOA","MSOA","LAD","RGN"), omit = c("Tower Hamlets", "Newham")
+levels = c("LSOA","MSOA","LAD","RGN"), omit = c("Tower Hamlets", "Newham"))
 
 }
 \seealso{

@@ -27,7 +27,9 @@
 #' }
 #' @param levels a character or numeric vector of minimum length 1 identifying
 #' either the names or columns positions of the variables in \code{data} that
-#' record to which higher-level grouping each lower-lower level unit belongs.
+#' record to which higher-level grouping each lower-lower level unit belongs
+#' @param omit (optional) a character vector containing the names of places to
+#' search for in the data and to omit from the calculations
 #' @return A list of data.frames, each containing the impact calculations for
 #' the higher-level geographies. The variables are
 #' \itemize{
@@ -66,7 +68,7 @@
 #' # For $LAD note the impacts of Tower Hamlets and Newham
 
 
-impacts <- function(data, vars, levels) {
+impacts <- function(data, vars, levels, omit = NULL) {
 
   if (is.character((vars))) {
     ifelse (all(vars %in% names(data)), vars <- match(vars, names(data)),
@@ -77,6 +79,7 @@ impacts <- function(data, vars, levels) {
     ifelse (all(levels %in% names(data)), levels <- match(levels, names(data)),
             stop("Higher level grouping variable not found"))
   }
+  if (!is.null(omit)) data <- .omit(data, omit)
 
   id <- .idx(data, vars)
   rr <- residuals(id)

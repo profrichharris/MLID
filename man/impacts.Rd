@@ -4,7 +4,7 @@
 \alias{impacts}
 \title{Impact calculations}
 \usage{
-impacts(data, vars, levels)
+impacts(data, vars, levels, omit = NULL)
 }
 \arguments{
 \item{data}{a data frame with \code{ncol(data) >= 2}. Each row of the data
@@ -21,7 +21,10 @@ following order
 
 \item{levels}{a character or numeric vector of minimum length 1 identifying
 either the names or columns positions of the variables in \code{data} that
-record to which higher-level grouping each lower-lower level unit belongs.}
+record to which higher-level grouping each lower-lower level unit belongs}
+
+\item{omit}{(optional) a character vector containing the names of places to
+search for in the data and to omit from the calculations}
 }
 \value{
 A list of data.frames, each containing the impact calculations for

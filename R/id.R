@@ -58,7 +58,7 @@
 #' @param nsims a vector, the number of random draws to be used for calculating
 #' the expected value. Default is 100.
 #' @param omit (optional) a character vector containing the names of places to
-#' search for in the data and to omit from the model
+#' search for in the data and to omit from the calculations
 #' @return an object of class \code{index}. This is a value between zero and one
 #' where 0 implies no segreation, and 1 means 'complete segregation' - wherever
 #' group Y is located, X is not (and vice versa). If \code{expected = TRUE} the
@@ -119,18 +119,7 @@ id <- function(data, vars, levels = NA, expected = FALSE,
   }
   if (!all(sapply(data[, vars], is.numeric))) stop("Variable is not numeric")
   if (anyNA(data[,vars])) stop("Data contain NAs")
-  if (!is.null(omit)) {
-    if(any(sapply(omit, is.numeric))) warning("Places to omit include
-                                              numeric data")
-    drop <- lapply(omit, function(x, df = data) {
-      k <- which(apply(df, 2, function(y) any(y == x)))
-      if(length(k) == 0) stop("Places to omit not found")
-      j <- which(df[, k] == x)
-      return(j)
-    })
-    drop <- unlist(drop)
-    data <- data[-drop,]
-  }
+  if (!is.null(omit)) data <- .omit(data, omit)
   ifelse (!is.na(levels), id <- .mid(data, vars, levels, expected, nsims),
             id <- .idx(data, vars, expected, nsims))
   return(id)
@@ -179,3 +168,18 @@ id <- function(data, vars, levels = NA, expected = FALSE,
   return(round(mean(results), 3))
 }
 
+
+
+.omit <- function(data, omit) {
+  if(any(sapply(omit, is.numeric))) warning("Places to omit include
+                                            numeric data")
+  drop <- lapply(omit, function(x, df = data) {
+    k <- which(apply(df, 2, function(y) any(y == x)))
+    if(length(k) == 0) stop("Places to omit not found")
+    j <- which(df[, k] == x)
+    return(j)
+  })
+  drop <- unlist(drop)
+  data <- data[-drop,]
+  return(data)
+}
