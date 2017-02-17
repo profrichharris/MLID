@@ -102,7 +102,7 @@
 #' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
 #' levels = c("LSOA","MSOA","LAD","RGN"), expected = TRUE)
 #' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-#' levels = c("LSOA","MSOA","LAD","RGN"), omit = c("Tower Hamlets", "Newham")
+#' levels = c("LSOA","MSOA","LAD","RGN"), omit = c("Tower Hamlets", "Newham"))
 #'
 #' @seealso \code{\link{checkerboard}} \code{\link{print.index}}
 #' \code{\link{holdback}} \code{\link{residuals.index}} \code{\link[lme4]{lmer}}
