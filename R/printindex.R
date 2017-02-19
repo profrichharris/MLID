@@ -8,9 +8,10 @@
 
 print.index <- function(x, ...) {
   cat(paste(attr(x, "vars")[1:2], collapse=" ~ "),"\n")
-  zz <- data.frame(ID = round(x[1], 3), E_ID = round(x[2], 3))
-  rownames(zz) <- ""
-  print(format(zz, nsmall=3))
+  cat("ID:\t", round(x[1], 3), "\n", sep = "")
+  if(length(x) == 1) cat("E(ID):\t(not calculated)\n", sep = "")
+  if(length(x) == 2) cat("E(ID):\t", round(x[2], 3), " (",
+                         round(x[2]/x[1]*100, 1), "%)\n", sep = "")
   cat("\n")
   if (!is.null(attr(x, "variance"))) {
     v <- attr(x, "variance")
