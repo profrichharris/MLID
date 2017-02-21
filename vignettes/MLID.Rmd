@@ -9,19 +9,38 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Introduction
+## Introduction
 
-This tutorial introduces the tools and functions available in the MLID package to fit a multilevel index of dissimilarity, a measure of ethnic or social segregation.
+This tutorial introduces the tools and functions available in the MLID package to fit a multilevel index of dissimilarity, a measure of ethnic or social segregation that captures both of the two principal dimensions of segregation - unevenness and spatial clustering - and looks for scale effects as well as the contributions of particular places to the index value.
+
+To begin, install the package from CRAN, type:
+```{r, eval=FALSE}
+install.packages("MLID")
+```
+
+Or, for the latest development version:
+```{r, eval=FALSE}
+# Needs devtools. Use: install.packages("devtools")
+require(devtools)
+devtools::install_github("profrichharris/MLID")
+```
+
+Next, load the package. 
+
+```{r, eval=FALSE}
+require(MLID)
+```
+
+### About the Index of Dissimilarity
 
 The index of dissimilarity (ID) widely is used in social research and examines whether the places where one population group are most likely to be located are the places where another group is most likely to be present too. The logic of the index is that if, for example, 1 per cent of population group Y resides in a neighbourhood then, all things being equal, 1 per cent of population group X ought to reside there too. If another neighbourhood is a little bigger and contains 2 per cent of all the Y group then it should contain 2 per cent of all the X group as well. In this way, if the share of the Y group is equal to the share of the X group in each and every neighbourhood then the two populations are said to have an even geographical distribution, described as a situation of no segregation. However, if wherever the Y population is found, X is not (and vice versa) then there is a situation of 'complete segregation'.
 
 The ID measures unevenness - how unevenly the two groups are distributed across the study region relative to one another and regardless of how big or small each group is in the total population. However, unevenness is only one of the two principal dimensions of segregation. The other is spatial clustering. Although the ID measures the scale of segregation in a numeric sense, giving an amount of segregation, it does not do so in a geographic sense. The classic example is to compare a checkerboard-style pattern of alternating back-white squares with other patterns that have increasing amounts of spatial clustering. In each of the examples below, the ID is the same, showing complete black-white segregation, yet the pattern of spatial clustering is not.[^1]
 
-[^1]: The 'stray' cell in examples 2-4 is to allow the model to be fitted but it also correctly identifies that some of the variation remains at the base level
+[^1]: The 'stray' cell in examples 2-4 is to allow the model to be fitted. With it, the model correctly identifies that some of the variation remains at the base level.
 
 A multilevel index of dissimilarity (MLID) improves upon the standard ID by capturing both the unevenness and the clustering. To see this, run the examples in the MLID package. Note that although the ID value is always 1.000 the other measures, Pvariance and Holdback, change with the geographical scale of segregation. Those other measures are explained later. All that matters for now is that they are sensitive to the pattern of spatial clustering whereas the standard ID is not.
 ```{r, eval=FALSE}
-require(MLID)
 checkerboard()
 ```
 <br>
@@ -88,7 +107,7 @@ print(sp::spplot(grd, colorkey = FALSE,
 
 <br>
 
-# Calculating the ID and MLID
+## Calculating the ID and MLID
 
 The index of dissimilarity is calculated as
 $$
@@ -114,9 +133,9 @@ The geographical scales of segregation are then explored by looking at the resid
 
 <br>
 
-# Case Study
+## Case Study
 
-## Fitting and exploring the standard ID
+### Fitting and exploring the standard ID
 
 The data frame
 ```{r, include=FALSE}
@@ -156,7 +175,7 @@ which simply is the average difference within Tower Hamlets ($\bar{\epsilon}_k$)
 
 [^2]: Specifically, the standard error of the residuals from the regression used to fit the model
 
-## Finding the expected value and aggregating the data
+### Finding the expected value and aggregating the data
 
 Although in principle the ID ranges from zero ('no segregation') to one ('complete segregation'), in practise, when the two population groups are of very different sizes (and especially when one is small) it is very difficult, if not impossible, for them to be evenly distributed relative to one another. In the current case study, the Bangladeshi group comprise `r round(sum(ethnicities$Bangladeshi) / sum(ethnicities$Persons) * 100, 1)` of the population of England and Wales, whereas the White British comprise `r round(sum(ethnicities$WhiteBrit) / sum(ethnicities$Persons) * 100, 1)`. With `r nrow(ethnicities)` neighbourhoods to be spread across, there are simply too few Bangladeshis for their distribution to match that of the White British.
 
@@ -186,7 +205,7 @@ head(impacts(aggdata, vars = c("Bangladeshi", "WhiteBrit"), levels = c("LAD", "R
 ```
 Generally, the affect of aggregation is to smooth over some of the variations in the data that may be 'noise' due to the small population size. However, it also risks smoothing out the geographical detail so there is a cost as well as a benefit.
 
-## Fitting a multilevel index
+### Fitting a multilevel index
 
 So far we have been fitting the standard index of dissimilarity, aggregating the local differences in the shares of the populations into higher-level geographies and thereby assessing the contributions of those higher-level geographies on the overall ID. The methods take advantage of the hierarchical structure of the data but there is nothing specifically multilevel about them in the sense of multilevel modelling. They are useful for identifying places that contribute most to the ID score but not on separating out the scale effects due to each level _net_ of the other levels. To achieve the latter, we need to handle the regression residuals in a different way using a multilevel model. 
 
@@ -220,9 +239,9 @@ catplot(ci, grid = FALSE)
 To aid the interpretability of the plots, the residuals are scaled by the standard error of the residuals from the OLS estimate of the index (by $\sigma_\epsilon$). Tower Hamlets and Newham clearly are different from other LADs, with a statistically significant residual difference between the share of the Bangladeshi population and the share of the White British population due to their LAD effect. At the MSOA level, E02001113 stands apart from the rest; at the regional level so does London but looking at the value for the scaled residual it does not seem especially significant.[^5]
 
 [^4]: The width of the confidence interval is adjusted for a test of difference between two means (see _Statistical Rules of Thumb_ by Gerald van Belle, 2011, eq 2.18). A 95 per cent confidence interval, for example, extends to 1.39 times the standard error around the mean and not 1.96. 
-[^5]: The caterpillar plots employ what might be considered to be intelligent plotting in that only a maximum of 50 residuals are shown on each plot. These are the 10 highest and lowest ranked residuals and then a sample of 30 from the remaining residuals, chosen at the ones with values that differ most from the residuals that precede them by ranking. In this way, the plots aim to preserve the tails of the ranked distribution as well as the most important break points in-between.
+[^5]: The caterpillar plots employ what might be considered to be intelligent plotting in that only a maximum of 50 residuals are shown on each plot. These are the 10 highest and lowest ranked residuals and then a sample of 30 from the remaining residuals, chosen as the ones with values that differ most from the residuals that precede them by ranking. In this way, the plots aim to preserve the tails of the ranked distribution as well as the most important break points in-between.
 
-## Making predictions and considering the effects of particular places
+### Making predictions and considering the effects of particular places
 
 What would happen to the ID if the effects of Tower Hamlets and Newham, were omitted? Let's find out.
 ```{r}
@@ -248,7 +267,7 @@ E02001113 appears to be a residential area of Oldham in North West England locat
 aggdata[aggdata$MSOA == "E02001113",]
 ```
 
-## Refitting the multilevel index
+### Refitting the multilevel index
 
 The next step is to refit the multilevel index with Tower Hamlets, Newham and E02001113 omitted.
 ```{r}
@@ -278,19 +297,21 @@ Overall, the following observations may be drawn:
 
 <br>
 
-# Closing Comments
+## Closing Comments
 
 Within the segregation literature there has been a movement away from measuring ethnic segregation at a single scale and using traditional indices, to treating segregation as a multiscale phenomenon about which measurement at a range of scales will shed knowledge. Amongst the contributions, several authors have promoted multilevel modelling as a way of looking at segregation at multiple scales of a geographic hierarchy simultaneously. The MLID package takes forward the approach by outlining a multilevel index of dissimilarity that combines the advantages of using a widely-understood index with a means to identify scale effects in a way that is computationally fast to estimate and easily fitted in R.
 
-## Achknowledgements
+### Acknowledgements
 
-My thanks to Dewi Owen for thoughtful observations and comments
+My thanks to Dewi Owen for thoughtful observations and comments, and for good company
+
+The package development was funded partly under the ESRC’s [Urban Big Data Centre](http://ubdc.ac.uk/), grant ES/L011921/1. 
 
 Census data: Office for National Statistics; National Records of Scotland; Northern Ireland Statistics and Research Agency (2016): 2011 Census aggregate data. UK Data Service (Edition: June 2016). DOI: (http://dx.doi.org/10.5257/census/aggregate-2011-1). The information is licensed under the terms of the Open Government Licence (http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3).
 
 The LSOA, MSOA, LAD and RGN codes are from (http://bit.ly/2lGMdkE) and are supplied under the Open Government Licence: Contains National Statistics data. Crown copyright and database right 2017.
 
-## References
+### References
 
 Harris R 2017 [Measuring the scales of segregation: Looking at the residential separation of White British and other school children in England using a multilevel index of dissimilarity](http://bit.ly/2lQ4r0n), _Transactions of the Institute of British Geographers_ in press
 

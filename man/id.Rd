@@ -126,7 +126,7 @@ levels = c("LSOA","MSOA","LAD","RGN"), omit = c("Tower Hamlets", "Newham"))
 \code{\link{checkerboard}} \code{\link{print.index}}
 \code{\link{holdback}} \code{\link{residuals.index}} \code{\link[lme4]{lmer}}
 
-Harris R (2016) Measuring the scales of segregation: Looking at the
+Harris R (2017) Measuring the scales of segregation: Looking at the
 residential separation of White British and other school children in England
 using a multilevel index of dissimilarity \url{http://bit.ly/2lQ4r0n}
 }
