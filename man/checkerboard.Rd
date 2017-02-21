@@ -25,8 +25,7 @@ of the total variance (labelled Pvariance) moves up the hierarchy with
 the increase in spatial clustering at greater geographical cases. However,
 the ID is always the same.
 
-to allow the model to be fitted but it also correctly identifies that some
-of the variation remains at the base level)
+also correctly identifies that some of the variation remains at the base level)
 }
 \seealso{
 \code{\link{id}}

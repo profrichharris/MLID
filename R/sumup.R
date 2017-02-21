@@ -14,8 +14,8 @@
 #' @param sumby a character or numeric vector of length 1 identifying either
 #' the name or columns position of the variables in \code{data} that records the
 #' higher-level group into which the data will be aggregated (summed)
-#' @param omit a character or numeric vector identifying any variables to be
-#' omitted from the aggregated data, such as lower-level names and identifiers
+#' @param drop a character or numeric vector identifying any variables to be
+#' dropped from the aggregated data, such as lower-level names and identifiers
 #' @return a data frame containing the aggregated data
 #' @examples
 #' data(ethnicities)
@@ -23,34 +23,34 @@
 #' id(ethnicities, vars = c("Arab","Other","Persons"), expected = TRUE)
 #' # the expected value is very high relative to the ID
 #'
-#' aggdata <- sumup(ethnicities, sumby = "LSOA", omit = "OA")
+#' aggdata <- sumup(ethnicities, sumby = "LSOA", drop = "OA")
 #' head(aggdata)
 #' id(aggdata, vars=c("Arab","Other","Persons"), expected = TRUE)
 #' # Note the sensitivity of the ID to the scale of analysis
 #'
-#' aggdata <- sumup(ethnicities, sumby = "MSOA", omit = "LSOA")
+#' aggdata <- sumup(ethnicities, sumby = "MSOA", drop = "LSOA")
 #' id(aggdata, vars=c("Arab","Other","Persons"), expected = TRUE)
 #' @seealso \code{\link{id}}
 
-sumup <- function(data, sumby, omit = NA) {
+sumup <- function(data, sumby, drop = NA) {
 
   if (is.character((sumby))) {
     ifelse (all(sumby %in% names(data)), sumby <- match(sumby, names(data)),
             stop("Grouping variable not found"))
   }
-  if (is.character((omit))) {
-    ifelse (all(omit %in% names(data)), omit <- match(omit, names(data)),
-            stop("Variables to omit not found"))
+  if (is.character((drop))) {
+    ifelse (all(drop %in% names(data)), drop <- match(drop, names(data)),
+            stop("Variables to drop not found"))
   }
   if (anyNA(data)) stop("Data contain NAs")
 
   cols <- sapply(data, is.numeric)
-  if (!is.na(omit)) cols[omit] <- FALSE
+  if (!is.na(drop)) cols[drop] <- FALSE
   gpddata <- stats::aggregate(data[,cols], by = list(data[,sumby]), sum)
   names(gpddata)[1] <- names(data)[sumby]
 
   cols <- !cols
-  if (!is.na(omit)) cols[omit] <- FALSE
+  if (!is.na(drop)) cols[drop] <- FALSE
   cols[sumby] <- FALSE
 
   mch <- match(gpddata[, 1], data[, sumby])

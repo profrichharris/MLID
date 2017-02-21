@@ -86,8 +86,8 @@ confint.index <- function(object, parm, level = 0.95, ...) {
 #' shown on each plot. These are the 10 highest and lowest ranked residuals
 #' and then a sample of 30 from the remaining residuals, chosen at the ones
 #' with values that differ most from the residuals that precede them by ranking.
-#' In this way, the plots aim to preserve the tails of the distribution as well
-#' as the most important break points inbetween.
+#' In this way, the plots aim to preserve the tails of the ranked distribution
+#' as well as the most important break points inbetween.
 #'
 #' When \code{ann = TRUE} (the default) some outliers are labelled and the
 #' percentage of the total variance due to each level is included. These
@@ -99,6 +99,7 @@ confint.index <- function(object, parm, level = 0.95, ...) {
 #' @param ann default is TRUE. If set to false, suppresses the automatic
 #' annotation of residuals on the plots with a confidence interval that does not
 #' overlap with any other
+#' @param grid arrange the plots in a grid? (Default is TRUE)
 #' @examples
 #' data("ethnicities")
 #' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
@@ -108,11 +109,11 @@ confint.index <- function(object, parm, level = 0.95, ...) {
 #' # Plots for all levels above the base level
 #' @seealso \code{\link{confint.index}} \code{\link{id}}
 
-catplot <- function(confint, ann = TRUE) {
+catplot <- function(confint, ann = TRUE, grid = FALSE) {
 
   if(class(confint) != "confintindex")
     stop("Object is of wrong type. Use output from confint.index()")
-  plot.confintindex(confint, ann)
+  plot.confintindex(confint, ann, grid)
 
 }
 
@@ -124,10 +125,11 @@ catplot <- function(confint, ann = TRUE) {
 #' @param x an object containing the output from function
 #' \code{\link{confint.index}}
 #' @param ann add annotation to the plot?
+#' @param grid arrange the plots in a grid? (Default is TRUE)
 #' @param ... other arguments
 #' @seealso \code{\link{catplot}}
 
-plot.confintindex <- function(x, ann = TRUE, ...) {
+plot.confintindex <- function(x, ann = TRUE, grid = TRUE, ...) {
   k <- length(x)
   grd <- c(0, 0)
   grd[1] <- which.min(abs(1:20 - sqrt(k)))
@@ -135,7 +137,7 @@ plot.confintindex <- function(x, ann = TRUE, ...) {
   if (grd[1] > grd[2])
     grd[c(1, 2)] <- grd[c(2, 1)]
 
-  par(mfrow = c(grd[1], grd[2]))
+  if(grid) par(mfrow = c(grd[1], grd[2]))
 
   lapply(x, function(y) {
 
@@ -197,7 +199,8 @@ plot.confintindex <- function(x, ann = TRUE, ...) {
     txt <- paste0(attr(y, "variance"),"% of variance")
     if (ann) text(n, 0.9*max(y[, 3]), txt, pos = 2, cex = 0.7, offset = 0)
   })
-  return()
+  par(mfrow = c(1,1))
+  return(invisible(NULL))
 
 }
 

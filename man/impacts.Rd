@@ -36,7 +36,7 @@ the higher-level geographies. The variables are
    expressed as a percentage of the total number in \code{data}
    \item \code{impact} The ratio of \code{pcntID} to \code{pcntN} multiplied
    by 100. Values over 100 indicate a group of neighbourhoods that have a
-   disproportionately high impact on the ID.
+   disproportionately high impact on the ID
    \item \code{scldMean} The average difference between the share of the Y
    population and the share of the X population, scaled by the standard error
    of the differences for the whole data set (to give a z-value). Positive
@@ -48,10 +48,13 @@ the higher-level geographies. The variables are
    data set. Higher values indicate greater variability within the region.
    \item \code{scldMin} The minimum difference between the share of the Y
    population and the share of the X for neighbourhoods within the region,
-   scaled by the standard error.
+   scaled by the standard error
    \item \code{scldMax} The maximum difference between the share of the Y
    population and the share of the X for neighbourhoods within the region,
-   scaled by the standard error.
+   scaled by the standard error
+   \item \code{pNYgtrNX} The percentage of neighbourhoods within the region
+   where the count of population group Y (as opposed to the share) is
+   greater than the count of population group X
 }
 }
 \description{
@@ -72,8 +75,8 @@ function \code{\link{id}}.
 }
 \examples{
 data(ethnicities)
-calcs <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
-head(calcs)
+impx <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
+head(impx)
 # sorted by impact score
 # For $RGN London has the greatest impact on the ID
 # The 'excess' share of the Bangladeshi population is not especially

@@ -22,6 +22,9 @@ aggregate data. UK Data Service (Edition: June 2016). DOI:
 \url{http://dx.doi.org/10.5257/census/aggregate-2011-1}.
 This information is licensed under the terms of the Open Government Licence
 \url{http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3}.
+The LSOA, MSOA, LAD and RGN codes are from \url{http://bit.ly/2lGMdkE} and
+are supplied under the Open Government Licence: Contains National Statistics
+data. Crown copyright and database right 2017.
 }
 \usage{
 ethnicities

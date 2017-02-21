@@ -4,7 +4,7 @@
 \alias{catplot}
 \title{Caterpillar plot}
 \usage{
-catplot(confint, ann = TRUE)
+catplot(confint, ann = TRUE, grid = FALSE)
 }
 \arguments{
 \item{confint}{an object containing the output from function
@@ -13,6 +13,8 @@ catplot(confint, ann = TRUE)
 \item{ann}{default is TRUE. If set to false, suppresses the automatic
 annotation of residuals on the plots with a confidence interval that does not
 overlap with any other}
+
+\item{grid}{arrange the plots in a grid? (Default is TRUE)}
 }
 \description{
 Draws a series of caterpillar plots, showing the residuals from the
@@ -30,8 +32,8 @@ Additionally, to avoid over-plotting only a maximum of 50 residuals are
 shown on each plot. These are the 10 highest and lowest ranked residuals
 and then a sample of 30 from the remaining residuals, chosen at the ones
 with values that differ most from the residuals that precede them by ranking.
-In this way, the plots aim to preserve the tails of the distribution as well
-as the most important break points inbetween.
+In this way, the plots aim to preserve the tails of the ranked distribution
+as well as the most important break points inbetween.
 
 When \code{ann = TRUE} (the default) some outliers are labelled and the
 percentage of the total variance due to each level is included. These

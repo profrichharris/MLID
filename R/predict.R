@@ -6,7 +6,7 @@
 #' \code{predict.index} produces predicted values for the index of dissimilarity
 #' obtained under three scenarios. These are:
 #' \itemize{
-#'   \item if the (residual) effects for the chosen higher-level places are set
+#'   \item if the effects (residuals) for the chosen higher-level places are set
 #'   to zero
 #'   \item if the shares of the two population groups are equal everywhere
 #'   except for the chosen places
@@ -30,6 +30,8 @@
 #' @param places a character vector containing the names of the places in any of
 #' the higher-level geographies for which the predictions will be made
 #' @param ... additional arguments (ignored)
+#' @return an object of class predictindex, primarily a list containing
+#' the predicted values
 #' @examples
 #' data(ethnicities)
 #' index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),

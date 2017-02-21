@@ -4,7 +4,7 @@
 \alias{sumup}
 \title{Sum the data up into higher level groups}
 \usage{
-sumup(data, sumby, omit = NA)
+sumup(data, sumby, drop = NA)
 }
 \arguments{
 \item{data}{a data frame with \code{ncol(data) >= 2}. Each row of the data
@@ -15,8 +15,8 @@ population have been made.}
 the name or columns position of the variables in \code{data} that records the
 higher-level group into which the data will be aggregated (summed)}
 
-\item{omit}{a character or numeric vector identifying any variables to be
-omitted from the aggregated data, such as lower-level names and identifiers}
+\item{drop}{a character or numeric vector identifying any variables to be
+dropped from the aggregated data, such as lower-level names and identifiers}
 }
 \value{
 a data frame containing the aggregated data
@@ -39,12 +39,12 @@ head(ethnicities)
 id(ethnicities, vars = c("Arab","Other","Persons"), expected = TRUE)
 # the expected value is very high relative to the ID
 
-aggdata <- sumup(ethnicities, sumby = "LSOA", omit = "OA")
+aggdata <- sumup(ethnicities, sumby = "LSOA", drop = "OA")
 head(aggdata)
 id(aggdata, vars=c("Arab","Other","Persons"), expected = TRUE)
 # Note the sensitivity of the ID to the scale of analysis
 
-aggdata <- sumup(ethnicities, sumby = "MSOA", omit = "LSOA")
+aggdata <- sumup(ethnicities, sumby = "MSOA", drop = "LSOA")
 id(aggdata, vars=c("Arab","Other","Persons"), expected = TRUE)
 }
 \seealso{

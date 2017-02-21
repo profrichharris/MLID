@@ -15,6 +15,10 @@ the higher-level geographies for which the predictions will be made}
 
 \item{...}{additional arguments (ignored)}
 }
+\value{
+an object of class predictindex, primarily a list containing
+the predicted values
+}
 \description{
 Predicted values based on the contribution of chosen places to the overall
 index
@@ -23,7 +27,7 @@ index
 \code{predict.index} produces predicted values for the index of dissimilarity
 obtained under three scenarios. These are:
 \itemize{
-  \item if the (residual) effects for the chosen higher-level places are set
+  \item if the effects (residuals) for the chosen higher-level places are set
   to zero
   \item if the shares of the two population groups are equal everywhere
   except for the chosen places

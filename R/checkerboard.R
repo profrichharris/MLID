@@ -17,9 +17,8 @@
 #' the increase in spatial clustering at greater geographical cases. However,
 #' the ID is always the same.
 #'
-#  (The 'stray' cell in examples 2-4 is
-#' to allow the model to be fitted but it also correctly identifies that some
-#' of the variation remains at the base level)
+#  The 'stray' cell in examples 2-4 is to allow the model to be fitted but it
+#' also correctly identifies that some of the variation remains at the base level)
 #' @seealso \code{\link{id}}
 
 

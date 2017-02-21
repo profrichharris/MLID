@@ -1,0 +1,15 @@
+citHeader("To cite package 'MLID' in publications use:")
+
+citEntry(entry="Manual",
+      title = "MLID: Tools and functions to fit a multilevel index of
+      dissimilarity",
+      author = personList(as.person("Richard Harris")),
+      year = "2017",
+      institution = "School of Geographical Sciences, University of Bristol",
+
+		  textVersion =
+		  paste("Richard Harris (2017).",
+		  "MLID: Tools and functions to fit a multilevel index of
+      dissimilarity.",
+      "School of Geographical Sciences, University of Bristol")
+)

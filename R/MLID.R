@@ -6,7 +6,7 @@
 #' scale effects and the impact of particular places on the overall index can
 #' be assessed.
 #'
-#' @seealso Harris R (2016) Measuring the scales of segregation: Looking at the
+#' @seealso Harris R (2017) Measuring the scales of segregation: Looking at the
 #' residential separation of White British and other school children in England
 #' using a multilevel index of dissimilarity \url{http://bit.ly/2lQ4r0n}
 #' @docType package

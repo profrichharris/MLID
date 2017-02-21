@@ -4,13 +4,15 @@
 \alias{plot.confintindex}
 \title{Plot the confidence intervals for the multilevel residuals}
 \usage{
-\method{plot}{confintindex}(x, ann = TRUE, ...)
+\method{plot}{confintindex}(x, ann = TRUE, grid = TRUE, ...)
 }
 \arguments{
 \item{x}{an object containing the output from function
 \code{\link{confint.index}}}
 
 \item{ann}{add annotation to the plot?}
+
+\item{grid}{arrange the plots in a grid? (Default is TRUE)}
 
 \item{...}{other arguments}
 }

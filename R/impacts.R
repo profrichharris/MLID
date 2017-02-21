@@ -39,7 +39,7 @@
 #'    expressed as a percentage of the total number in \code{data}
 #'    \item \code{impact} The ratio of \code{pcntID} to \code{pcntN} multiplied
 #'    by 100. Values over 100 indicate a group of neighbourhoods that have a
-#'    disproportionately high impact on the ID.
+#'    disproportionately high impact on the ID
 #'    \item \code{scldMean} The average difference between the share of the Y
 #'    population and the share of the X population, scaled by the standard error
 #'    of the differences for the whole data set (to give a z-value). Positive
@@ -51,15 +51,18 @@
 #'    data set. Higher values indicate greater variability within the region.
 #'    \item \code{scldMin} The minimum difference between the share of the Y
 #'    population and the share of the X for neighbourhoods within the region,
-#'    scaled by the standard error.
+#'    scaled by the standard error
 #'    \item \code{scldMax} The maximum difference between the share of the Y
 #'    population and the share of the X for neighbourhoods within the region,
-#'    scaled by the standard error.
+#'    scaled by the standard error
+#'    \item \code{pNYgtrNX} The percentage of neighbourhoods within the region
+#'    where the count of population group Y (as opposed to the share) is
+#'    greater than the count of population group X
 #' }
 #' @examples
 #' data(ethnicities)
-#' calcs <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
-#' head(calcs)
+#' impx <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
+#' head(impx)
 #' # sorted by impact score
 #' # For $RGN London has the greatest impact on the ID
 #' # The 'excess' share of the Bangladeshi population is not especially
@@ -86,17 +89,17 @@ impacts <- function(data, vars, levels, omit = NULL) {
   se <- sigma(attr(id, "ols"))
 
   levels <- as.list(levels)
-  calcs <- lapply(levels, .impact.calcs, data, rr, se)
-  names(calcs) <- names(data[, unlist(levels)])
-  attr(calcs, "vars") <- paste(names(data[, vars]), collapse=" ~ ")
-  class(calcs) <- "impacts"
-  return(calcs)
+  impx <- lapply(levels, .impact.calcs, data, rr, se, vars)
+  names(impx) <- names(data[, unlist(levels)])
+  attr(impx, "vars") <- paste(names(data[, vars]), collapse=" ~ ")
+  class(impx) <- "impacts"
+  return(impx)
 
 }
 
 
 
-.impact.calcs <- function(col, data, rr, se) {
+.impact.calcs <- function(col, data, rr, se, vars) {
 
   t1 <- tapply(abs(rr), data[,col], sum) / sum(abs(rr)) * 100
   t2 <- tapply(abs(rr), data[,col], length) / length(rr) * 100
@@ -108,10 +111,17 @@ impacts <- function(data, vars, levels, omit = NULL) {
   t5 <- tapply(rr, data[,col], min) / se
   t6 <- tapply(rr, data[,col], max) / se
 
+  Y <- data[,vars[1]]
+  X <- data[,vars[2]]
+  t7 <- tapply(1:length(Y), data[,col], function(x) {
+    sum(Y[x] > X[x]) / length(x) * 100
+  })
+
   df <- data.frame(pcntID = round(t1,2), pcntN = round(t2,2),
                    impact = round(impact, 0),
                    scldMean = round(t3,2), scldSD = round(t4,2),
-                   scldMin = round(t5,2), scldMax = round(t6,2))
+                   scldMin = round(t5,2), scldMax = round(t6,2),
+                   pNYgtrNX = round(t7, 1))
 
   return(df)
 }
