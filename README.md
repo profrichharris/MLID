@@ -37,3 +37,5 @@ vignette("MLID", package = "MLID")
 ### Licence
 
 Scripts are released under the [GPL-3 License](https://www.gnu.org/licenses/gpl.html)
+
+[![Travis-CI Build Status](https://travis-ci.org/profrichharris/MLID.svg?branch=master)](https://travis-ci.org/profrichharris/MLID)
