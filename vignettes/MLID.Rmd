@@ -13,7 +13,7 @@ vignette: >
 
 This tutorial introduces the tools and functions available in the MLID package to fit a multilevel index of dissimilarity, a measure of ethnic or social segregation that captures both of the two principal dimensions of segregation - unevenness and spatial clustering - and looks for scale effects as well as the contributions of particular places to the index value.
 
-To begin, install the package from CRAN, type:
+To begin, install the package from CRAN by typing
 ```{r, eval=FALSE}
 install.packages("MLID")
 ```
@@ -33,9 +33,9 @@ require(MLID)
 
 ### About the Index of Dissimilarity
 
-The index of dissimilarity (ID) widely is used in social research and examines whether the places where one population group are most likely to be located are the places where another group is most likely to be present too. The logic of the index is that if, for example, 1 per cent of population group Y resides in a neighbourhood then, all things being equal, 1 per cent of population group X ought to reside there too. If another neighbourhood is a little bigger and contains 2 per cent of all the Y group then it should contain 2 per cent of all the X group as well. In this way, if the share of the Y group is equal to the share of the X group in each and every neighbourhood then the two populations are said to have an even geographical distribution, described as a situation of no segregation. However, if wherever the Y population is found, X is not (and vice versa) then there is a situation of 'complete segregation'.
+The index of dissimilarity (ID) widely is used in social and demographic research and examines whether the places where one population group are most likely to be located are the places where another group is most likely to be present too. The logic of the index is that if, for example, 1 per cent of population group Y resides in a neighbourhood then, all things being equal, 1 per cent of population group X ought to reside there too. If another neighbourhood is a little bigger and contains 2 per cent of all the Y group then it should contain 2 per cent of all the X group as well. In this way, if the share of the Y group is equal to the share of the X group in each and every neighbourhood then the two populations are said to have an even geographical distribution, described as a situation of 'no segregation'. However, if wherever the Y population is found, X is not (and vice versa) then there is a situation of 'complete segregation'.
 
-The ID measures unevenness - how unevenly the two groups are distributed across the study region relative to one another and regardless of how big or small each group is in the total population. However, unevenness is only one of the two principal dimensions of segregation. The other is spatial clustering. Although the ID measures the scale of segregation in a numeric sense, giving an amount of segregation, it does not do so in a geographic sense. The classic example is to compare a checkerboard-style pattern of alternating back-white squares with other patterns that have increasing amounts of spatial clustering. In each of the examples below, the ID is the same, showing complete black-white segregation, yet the pattern of spatial clustering is not.[^1]
+The ID measures unevenness - how unevenly the two groups are distributed across the study region relative to one another and regardless of how big or small each group is in the total population (all that matters is the share of each group in each neighbrouhood). However, unevenness is only one of the two principal dimensions of segregation. The other is spatial clustering. Although the ID measures the scale of segregation in a numeric sense, giving an amount of segregation, it does not do so in a geographic sense. The classic example is to compare a checkerboard-style pattern of alternating back-white squares with other patterns that have increasing amounts of spatial clustering. In each of the examples below, the ID is the same, showing complete black-white segregation, yet the pattern of spatial clustering is not.[^1]
 
 [^1]: The 'stray' cell in examples 2-4 is to allow the model to be fitted. With it, the model correctly identifies that some of the variation remains at the base level.
 
@@ -103,7 +103,7 @@ print(sp::spplot(grd, colorkey = FALSE,
                  border = "grey"))
 ```
 <br>
-*Figure 1. Each of these patterns generates the same ID value yet they represent different degrees of spatial clustering. The multilevel index distinguishes between them*
+*Figure 1. Each of these patterns generates the same ID value yet they represent different degrees of spatial clustering. The multilevel index distinguishes between them.*
 
 <br>
 
@@ -123,7 +123,7 @@ Setting $\beta_0 = 0$ and $\beta_1 = 1$, and rearranging gives
 $$\epsilon_i = y_i - x_i$$
 from which the ID can be calculated as
 $$\text{ID} = 0.5\sum_i|\epsilon_i|$$
-That is, the ID is half the sum of the absolute values of the residuals from a regression model where the dependent variable is the share of the Y population per neighbourhood, the intercept is zero and there is an offset, which is the share of the X population.
+This shows that the ID is half the sum of the absolute values of the residuals from a regression model where the dependent variable is the share of the Y population per neighbourhood, the intercept is zero and there is an offset, which is the share of the X population.
 
 The multilevel model is achieved by estimating what of the residuals is due to different levels of a geographic hierarchy. For example, for a four level model where neighbourhoods at level $i$ group into districts at level $j$, those into larger administrative authorities at level $k$, and then into regions at level $l$, the residuals can be estimated as
 $$\epsilon_i = \hat\lambda_i + \hat\mu_j + \hat\nu_k + \hat\xi_l$$
@@ -169,7 +169,7 @@ head(ethnicities)
 Second, they use the knowledge that the $\text{ID}\propto\sum_i|\epsilon_i|$ where each $\epsilon_i$ is a local value - the difference in the share of the Bangladeshi and the share of the White British populations per OA. Those small areas differences can be summarised by a higher-level geography. For example, the differences in the shares of the two population groups within Tower Hamlets can be summarised as $\sum_i w_i |\epsilon_i|$ where $w_i = 1$ if the OA is located in Tower Hamlets, otherwise $0$. As a percentage of the overall ID for England and Wales, OAs within Tower Hamlets contribute,
 $$\text{pcntID} = \frac{\sum_i w_i |\epsilon_i|}{\sum_i |\epsilon_i|}\times100$$
 
-which is `r twrh[1]` per cent. This is a disproportionate amount because only `r twrh[2]` of all OAs are in Tower Hamlets. Calculating `r twrh[1]` $\div$ `r twrh[2]` $\times$ 100 gives the impact of the neighbourhoods within Tower Hamlets upon the overall ID, and is `r twrh[3]` - i.e. `r twrh[3]/100` times greater than expected. This impact could be because the shares of the Bangladeshi population exceed the shares of the White British or it could be the other way around. In fact, it is the former: on average the share of the Bangladeshi population is greater than the share of the White British in Tower Hamlets, shown by the positive value for the mean difference, scldMean. This is calculated as,
+which is `r twrh[1]` per cent. This is a disproportionate amount because only `r twrh[2]` of all OAs are in Tower Hamlets. Calculating `r twrh[1]` $\div$ `r twrh[2]` $\times$ 100 gives the impact of the neighbourhoods within Tower Hamlets upon the overall ID, and is `r twrh[3]` - i.e. `r twrh[3]/100` times greater than expected. This impact could be because the shares of the Bangladeshi population exceed the shares of the White British or it could be the other way around. It is the former: on average the share of the Bangladeshi population is greater than the share of the White British in Tower Hamlets, shown by the positive value for the mean difference, scldMean. This is calculated as,
 $$\text{scldMean} = \frac{\sum_i w_i \epsilon_i}{\sigma_\epsilon\sum_i w_i}$$
 which simply is the average difference within Tower Hamlets ($\bar{\epsilon}_k$) , scaled by $\sigma_\epsilon$, the standard deviation of the $\epsilon_i$.[^2] As a rule of thumb, values with a magnitude greater than 2 may be regarded as unusual, which here include Tower Hamlets and Newham. Within both, and especially Tower Hamlets, there is variation from one OA to the next: the standard deviation for the $\epsilon_i$ values in Tower Hamlets alone is `r twrh[5]` greater than for all of England and Wales. In at least one Tower Hamlets neighbourhood the share of the Bangladeshi population is less than the share of the White British (because the minimum value of $\epsilon_i$, scldMin is negative) and in one it is much greater (the maximum value is `r twrh[7]`; both the minimum and maximum are scaled by $\sigma_\epsilon$ ). Overall, whilst Tower Hamlets is a place within which the Bangladeshi population seems to be disproportionately concentrated relative to the White British, a sense of perspective is deserved: a minority (`r twrh[8]` per cent) of its neighbourhoods have more Bangladeshi residents than they do White British so the White British are the more prevalent group.
 
@@ -203,7 +203,7 @@ The ID is now `r index[1]` with a much smaller expected value of `r index[2]`. T
 ```{r}
 head(impacts(aggdata, vars = c("Bangladeshi", "WhiteBrit"), levels = c("LAD", "RGN")), n = 3)
 ```
-Generally, the affect of aggregation is to smooth over some of the variations in the data that may be 'noise' due to the small population size. However, it also risks smoothing out the geographical detail so there is a cost as well as a benefit.
+Generally, the affect of aggregation is to smooth over some of the variations in the data that may be 'noise' due to the small population size. However, it also risks smoothing out the geographical detail (which is why the ID tends to decrease with aggregation) so there is a cost as well as a benefit.
 
 ### Fitting a multilevel index
 
@@ -214,7 +214,7 @@ As an example, consider a four level model with LLOAs as the base, Middle Level 
 index <- id(aggdata, vars = c("Bangladeshi", "WhiteBrit"), levels = c("MSOA","LAD","RGN"))
 index
 ```
-The ID value is unchanged and the expected value is omitted since it is known already. What we do now have are the Pvariance and Holdback scores at each of the levels.
+The ID value is unchanged and we have chosen to omit the expected value because it is known already. What we do now have are the Pvariance and Holdback scores at each of the levels.
 
 The Pvariance is the percentage of the total variance due to each level. For example,
 $$\text{Pvariance}\;_{Base} = \frac{\hat{\sigma}_i}{\hat{\sigma}_i + \hat{\sigma}_j + \hat{\sigma}_k + \hat{\sigma}_l}\times100 $$
@@ -223,9 +223,9 @@ It is a measure of spatial clustering, of the pattern of segregation. What the r
 
 The Holdback scores are different. They consider what the change would be to the ID score if the effect on it due to the level was set to zero. For example, holding back the regional effect reduces the ID by `r attr(index, "holdback")[4]` per cent. The holdback score at that level is calculated as,
 $$\text{Holdback}\;_l = \frac{(0.5\sum_i{|\hat\lambda_i + \hat\mu_j + \hat\nu_k + 0|)}-\text{ID}}{\text{ID}} \times100 $$
-It may seem odd that in the results above the Holdback score is greatest where Pvariance is least. However, there is no contradiction because they measure different things. The model is additive so any uplift (or decrease) in segregation that is due to the regional scale applies to all the neighbourhoods within that region, whereas the change due to the LAD scale, for example, is restricted to the smaller sub-group of neighbourhoods that are in that local authority. It therefore is entirely possible for the proportion of the variance to be small at the higher levels but for the differences between places at those levels to still have a strong cumulative effect upon all the lower levels to which they must be added. This will be picked-up on by the holdback scores.
+It may seem odd that in the results above the Holdback score is greatest where Pvariance is least, at the regional scale. However, there is no contradiction because they measure different things. The model is additive so any uplift (or decrease) in segregation that is due to the regional scale applies to all the neighbourhoods within that region, whereas the change due to the LAD scale, for example, is restricted to the smaller sub-group of neighbourhoods that are in that local authority. It is entirely possible for the proportion of the variance to be small at the higher levels but for the differences between places at those levels to still have a strong cumulative effect upon all the lower levels to which they must be added. This will be picked-up on by the holdback scores.
 
-From the initial analysis it may be suspected that the LAD variance is being driven by Tower Hamlets and Newham. This is confirmed by plotting the residuals at each level and their confidence intervals:[^4]
+From the initial analysis it may be suspected that the LAD variance is being driven by Tower Hamlets and Newham. This is confirmed by plotting the residuals at each level and their confidence intervals using 'caterpillar plots':[^4]
 
 ```{r}
 ci <- confint(index)
@@ -254,9 +254,9 @@ where $w_l = 0$ for Tower Hamlets and Newham, and $1$ for every other LAD. In th
 
 The second prediction is what the ID would be if the shares of the two population groups were equal, $\epsilon_i = y_i - x_i = 0$, everywhere except Tower Hamlets and Newham. The result is an ID score of `r prd[[2]][2]`, meaning that Tower Hamlets' and Newham's neighbourhoods contribute `r prd[[2]][2]` $\div$ `r prd[[2]][1]` $\times$ 100 per cent of the total ID, which is `r round(prd[[2]][2] / prd[[2]][1] * 100,1)` per cent. Measured in relation to the percentage of neighbourhoods that are in Tower Hamlets and Newham gives an impact score of `r attr(prd, "impact")` - `r attr(prd, "impact") / 100` times greater than expected.
 
-The third prediction calculates the standard ID _only_ for Tower Hamlets and Newham; that is, if all but the data for those two places are omitted from the calculation. The resulting ID is `r prd[[3]][2]`. Within Tower Hamlets and Newham the Bangladeshi and White British populations are more evenly distributed than they are across the whole of England and Wales. However, this finding is based on what remains of the two groups when everyone living elsewhere from Tower Hamlets and Newham is excluded. It remains the cases that larger shares of the White British are found outside of Tower Hamlets and Newham whereas larger shares of the Bangladeshis are found within them.
+The third prediction calculates the standard ID _only_ for Tower Hamlets and Newham; that is, if all but the data for those two places are omitted from the calculation. The resulting ID is `r prd[[3]][2]`. Within Tower Hamlets and Newham the Bangladeshi and White British populations are more evenly distributed than they are across the whole of England and Wales. However, this finding is based on what remains of the two groups when everyone living outside of Tower Hamlets and Newham is excluded. It remains the cases that larger shares of the White British are found outside of Tower Hamlets and Newham whereas larger shares of the Bangladeshis are found within them.
 
-A final measure is the R-square of `r attr(prd, "Rsq")`. This is the proportion of the variation in $\epsilon_i = y_i - x_i$, i.e. the base level differences in the shares of the Bangladeshi and White British populations, that can be attributed to those places being in Tower Hamlets or Newham. It is a sizable proportion.
+A final measure is the R-square of `r attr(prd, "Rsq")`. This is the proportion of the variation in $\epsilon_i = y_i - x_i$, i.e. the base level differences in the shares of the Bangladeshi and White British populations, that can be attributed to those places being in Tower Hamlets or Newham. It is a sizable proportion. It seems that Tower Hamlets and Newham are having a strong impact on the ID.
 
 Extending the analysis, we can predict what happens if Tower Hamlets, Newham and the MSOA E02001113 are omitted,
 ```{r}
@@ -269,7 +269,7 @@ aggdata[aggdata$MSOA == "E02001113",]
 
 ### Refitting the multilevel index
 
-The next step is to refit the multilevel index with Tower Hamlets, Newham and E02001113 omitted.
+Having identified the 'outliers', a next step is to refit the multilevel index with Tower Hamlets, Newham and E02001113 omitted.
 ```{r}
 newindex <- id(aggdata, vars = c("Bangladeshi", "WhiteBrit"), levels = c("MSOA","LAD","RGN"), omit = c("Tower Hamlets", "Newham", "E02001113"))
 newindex
@@ -299,7 +299,7 @@ Overall, the following observations may be drawn:
 
 ## Closing Comments
 
-Within the segregation literature there has been a movement away from measuring ethnic segregation at a single scale and using traditional indices, to treating segregation as a multiscale phenomenon about which measurement at a range of scales will shed knowledge. Amongst the contributions, several authors have promoted multilevel modelling as a way of looking at segregation at multiple scales of a geographic hierarchy simultaneously. The MLID package takes forward the approach by outlining a multilevel index of dissimilarity that combines the advantages of using a widely-understood index with a means to identify scale effects in a way that is computationally fast to estimate and easily fitted in R.
+Within the segregation literature there has been a movement away from measuring ethnic segregation at a single scale and using traditional indices, to treating segregation as a multiscale phenomenon about which measurement at a range of scales will shed knowledge. That literature has been the inspiration for this work. Amongst the contributions, several authors have promoted multilevel modelling as a way of looking at segregation at multiple scales of a geographic hierarchy simultaneously. The MLID package takes forward the approach by outlining a multilevel index of dissimilarity that combines the advantages of using a widely-understood index with a means to identify scale effects in a way that is computationally fast to estimate and easily fitted in R.
 
 ### Acknowledgements
 

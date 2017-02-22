@@ -4,7 +4,7 @@
 \alias{predict.index}
 \title{Predicted index values}
 \usage{
-\method{predict}{index}(object, places, ...)
+predict.index(object, places, ...)
 }
 \arguments{
 \item{object}{an object of class \code{index}: a multilevel index created
