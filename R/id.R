@@ -89,23 +89,28 @@
 #' # Calculate the standard index value
 #' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"))
 #'
+#' \dontrun{
 #' # Calculate also the expected value under randomisation
 #' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"), expected = TRUE)
 #' # will generate a warning because the total population per neighbourhood
 #' # has not been specified
 #' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
 #' expected = TRUE)
+#' # The expected value is a high percentage of the actual value so
+#' # aggregate it into a higher level geography...
+#' }
+#' aggdata <- sumup(ethnicities, sumby = "LSOA", drop = "OA")
+#' head(aggdata)
 #'
 #' # Multilevel models
-#' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-#' levels = c("LSOA","MSOA","LAD","RGN"))
-#' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit", "Persons"),
-#' levels = c("LSOA","MSOA","LAD","RGN"), expected = TRUE)
-#' id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-#' levels = c("LSOA","MSOA","LAD","RGN"), omit = c("Tower Hamlets", "Newham"))
+#' id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
+#' levels = c("MSOA","LAD","RGN"))
+#' id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
+#' levels = c("MSOA","LAD","RGN"), omit = c("Tower Hamlets", "Newham"))
 #'
 #' @seealso \code{\link{checkerboard}} \code{\link{print.index}}
 #' \code{\link{holdback}} \code{\link{residuals.index}} \code{\link[lme4]{lmer}}
+#' \code{\link{sumup}}
 #'
 #' Harris R (2017) Measuring the scales of segregation: Looking at the
 #' residential separation of White British and other school children in England

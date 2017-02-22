@@ -28,4 +28,5 @@
 #' The LSOA, MSOA, LAD and RGN codes are from \url{http://bit.ly/2lGMdkE} and
 #' are supplied under the Open Government Licence: Contains National Statistics
 #' data. Crown copyright and database right 2017.
+#' @seealso \code{\link{aggdata}}
 "ethnicities"

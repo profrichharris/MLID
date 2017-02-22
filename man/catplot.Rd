@@ -41,11 +41,11 @@ will not add up to 100% because the base level is not presented.
 \code{catplot} is a wrapper to \code{\link{plot.confintindex}}
 }
 \examples{
-data("ethnicities")
-index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-levels = c("LSOA","MSOA","LAD","RGN"))
+data(aggdata)
+index <- id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
+levels = c("MSOA","LAD","RGN"))
 ci <- confint(index)
-catplot(ci)
+catplot(ci, grid = TRUE)
 # Plots for all levels above the base level
 }
 \seealso{

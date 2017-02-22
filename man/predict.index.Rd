@@ -48,9 +48,9 @@ The predictions also include:
 }
 }
 \examples{
-data(ethnicities)
-index <- id(ethnicities, vars = c("Bangladeshi", "WhiteBrit"),
-levels = c("LSOA","MSOA","LAD","RGN"))
+data(aggdata)
+index <- id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
+levels = c("MSOA","LAD","RGN"))
 ci <- confint(index)
 catplot(ci)
 # Note Tower Hamlets and Newham. Obtain the predictions for them:
