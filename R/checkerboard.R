@@ -25,10 +25,18 @@
 
 checkerboard <- function() {
 
-  if(!requireNamespace("raster", quietly = TRUE))
-    stop("Requires the raster package to be installed")
-  if(!requireNamespace("sp", quietly = TRUE))
-    stop("Requires the sp package to be installed")
+  if(!requireNamespace("raster", quietly = TRUE)) {
+    warning("Requires the raster package to be installed")
+    ifelse(readline("Install the package? \n1: Yes\n2: No\n") == 1,
+          install.packages("raster"),
+          stop())
+  }
+  if(!requireNamespace("sp", quietly = TRUE)) {
+    warning("Requires the sp package to be installed")
+    ifelse(readline("Install the package? \n1: Yes\n2: No\n") == 1,
+           install.packages("sp"),
+           stop())
+  }
 
   x <- c(rep(c(1,0), times=8), rep(c(0,1), times=8))
   x <- matrix(x, nrow=16, ncol=16)
