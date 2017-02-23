@@ -112,6 +112,9 @@
 #' \code{\link{holdback}} \code{\link{residuals.index}} \code{\link[lme4]{lmer}}
 #' \code{\link{sumup}}
 #'
+#' Harris R (2017) Fitting a multilevel index of segregation in R:
+#' using the MLID package \url{http://rpubs.com/profrichharris/MLID}
+#'
 #' Harris R (2017) Measuring the scales of segregation: Looking at the
 #' residential separation of White British and other school children in England
 #' using a multilevel index of dissimilarity \url{http://bit.ly/2lQ4r0n}

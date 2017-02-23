@@ -241,26 +241,26 @@ To aid the interpretability of the plots, the residuals are scaled by the standa
 [^4]: The width of the confidence interval is adjusted for a test of difference between two means (see _Statistical Rules of Thumb_ by Gerald van Belle, 2011, eq 2.18). A 95 per cent confidence interval, for example, extends to 1.39 times the standard error around the mean and not 1.96. 
 [^5]: The caterpillar plots employ what might be considered to be intelligent plotting in that only a maximum of 50 residuals are shown on each plot. These are the 10 highest and lowest ranked residuals and then a sample of 30 from the remaining residuals, chosen as the ones with values that differ most from the residuals that precede them by ranking. In this way, the plots aim to preserve the tails of the ranked distribution as well as the most important break points in-between.
 
-### Making predictions and considering the effects of particular places
+### Considering the effect of particular places upon the index
 
-What would happen to the ID if the effects of Tower Hamlets and Newham, were omitted? Let's find out.
+What would happen to the ID if the effect of Tower Hamlets and Newham, were omitted? Let's find out.
 ```{r}
-prd <- predict(index, places = c("Tower Hamlets", "Newham"))
+prd <- effect(index, places = c("Tower Hamlets", "Newham"))
 prd
 ```
-The function provides three sets of predictions. The first is what the ID would be if the LAD level residual effects ($\xi_l$) were set to zero for Tower Hamlets and Newham, i.e. if
+The function evaluates what the value of the ID would be under three different scenarios to give an indication of the effects of the named places upon the current ID. The first is if the LAD level residual effects ($\xi_l$) were set to zero for Tower Hamlets and Newham, i.e. if
 $$\text{ID}= 0.5\sum_i|\hat\lambda_i + \hat\mu_j + \hat\nu_k + w_l\;\hat\xi_l|$$
 where $w_l = 0$ for Tower Hamlets and Newham, and $1$ for every other LAD. In the present example, it reduces the ID from `r prd[[1]][1]` to `r prd[[1]][2]`, which is `r round(prd[[1]][2] / prd[[1]][1] * 100, 1)` per cent of the original value.
 
-The second prediction is what the ID would be if the shares of the two population groups were equal, $\epsilon_i = y_i - x_i = 0$, everywhere except Tower Hamlets and Newham. The result is an ID score of `r prd[[2]][2]`, meaning that Tower Hamlets' and Newham's neighbourhoods contribute `r prd[[2]][2]` $\div$ `r prd[[2]][1]` $\times$ 100 per cent of the total ID, which is `r round(prd[[2]][2] / prd[[2]][1] * 100,1)` per cent. Measured in relation to the percentage of neighbourhoods that are in Tower Hamlets and Newham gives an impact score of `r attr(prd, "impact")` - `r attr(prd, "impact") / 100` times greater than expected.
+The second is what the ID would be if the shares of the two population groups were equal, $\epsilon_i = y_i - x_i = 0$, everywhere except Tower Hamlets and Newham. The result is an ID score of `r prd[[2]][2]`, meaning that Tower Hamlets' and Newham's neighbourhoods contribute `r prd[[2]][2]` $\div$ `r prd[[2]][1]` $\times$ 100 per cent of the total ID, which is `r round(prd[[2]][2] / prd[[2]][1] * 100,1)` per cent. Measured in relation to the percentage of neighbourhoods that are in Tower Hamlets and Newham gives an impact score of `r attr(prd, "impact")` - `r attr(prd, "impact") / 100` times greater than expected.
 
-The third prediction calculates the standard ID _only_ for Tower Hamlets and Newham; that is, if all but the data for those two places are omitted from the calculation. The resulting ID is `r prd[[3]][2]`. Within Tower Hamlets and Newham the Bangladeshi and White British populations are more evenly distributed than they are across the whole of England and Wales. However, this finding is based on what remains of the two groups when everyone living outside of Tower Hamlets and Newham is excluded. It remains the cases that larger shares of the White British are found outside of Tower Hamlets and Newham whereas larger shares of the Bangladeshis are found within them.
+The third calculates the standard ID _only_ for Tower Hamlets and Newham; that is, if all but the data for those two places are omitted from the calculation. The resulting ID is `r prd[[3]][2]`. Within Tower Hamlets and Newham the Bangladeshi and White British populations are more evenly distributed than they are across the whole of England and Wales. However, this finding is based on what remains of the two groups when everyone living outside of Tower Hamlets and Newham is excluded. It remains the cases that larger shares of the White British are found outside of Tower Hamlets and Newham whereas larger shares of the Bangladeshis are found within them.
 
 A final measure is the R-square of `r attr(prd, "Rsq")`. This is the proportion of the variation in $\epsilon_i = y_i - x_i$, i.e. the base level differences in the shares of the Bangladeshi and White British populations, that can be attributed to those places being in Tower Hamlets or Newham. It is a sizable proportion. It seems that Tower Hamlets and Newham are having a strong impact on the ID.
 
-Extending the analysis, we can predict what happens if Tower Hamlets, Newham and the MSOA E02001113 are omitted,
+Extending the analysis, we can examine the effect of Tower Hamlets, Newham and the MSOA E02001113 upon the index,
 ```{r}
-predict(index, places = c("Tower Hamlets", "Newham", "E02001113"))
+effect(index, places = c("Tower Hamlets", "Newham", "E02001113"))
 ```
 E02001113 appears to be a residential area of Oldham in North West England located by Royal Oldham Hospital and containing high numbers of Bangladeshis: [view map](https://mapit.mysociety.org/area/34992.html). Like Tower Hamlets and Newham it too appears to be an 'outlier' with an unusually high share of the Bangladeshi population.
 ```{r}
