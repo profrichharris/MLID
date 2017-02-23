@@ -30,6 +30,7 @@
 #' the higher-level geographies for which the evaluation will be made
 #' @return an object, primarily a list containing the evaluated values
 #' @examples
+#' \dontrun{
 #' data(aggdata)
 #' index <- id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
 #' levels = c("MSOA","LAD","RGN"))
@@ -39,6 +40,7 @@
 #' effect(index, "Tower Hamlets")
 #' effect(index, "Newham")
 #' effect(index, c("Tower Hamlets","Newham"))
+#' }
 #' @seealso \code{\link{id}}
 #'
 #' Harris R (2017) Fitting a multilevel index of segregation in R:

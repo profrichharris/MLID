@@ -23,11 +23,13 @@
 #' number of levels in the index where each part of the list is a data frame
 #' giving the confidence interval for the location
 #' @examples
+#' \dontrun{
 #' data(aggdata)
 #' index <- id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
 #' levels = c("MSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci)
+#' }
 #' @seealso \code{\link{catplot}} \code{\link{id}} \code{\link[lme4]{ranef}}
 
 
@@ -101,12 +103,14 @@ confint.index <- function(object, parm, level = 0.95, ...) {
 #' overlap with any other
 #' @param grid arrange the plots in a grid? (Default is TRUE)
 #' @examples
+#' \dontrun{
 #' data(aggdata)
 #' index <- id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
 #' levels = c("MSOA","LAD","RGN"))
 #' ci <- confint(index)
 #' catplot(ci, grid = TRUE)
 #' # Plots for all levels above the base level
+#' }
 #' @seealso \code{\link{confint.index}} \code{\link{id}}
 
 catplot <- function(confint, ann = TRUE, grid = FALSE) {

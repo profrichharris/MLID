@@ -44,6 +44,7 @@ The evaluation also includes:
 See \code{vignette("MLID")} for further details
 }
 \examples{
+\dontrun{
 data(aggdata)
 index <- id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
 levels = c("MSOA","LAD","RGN"))
@@ -53,6 +54,7 @@ catplot(ci)
 effect(index, "Tower Hamlets")
 effect(index, "Newham")
 effect(index, c("Tower Hamlets","Newham"))
+}
 }
 \seealso{
 \code{\link{id}}

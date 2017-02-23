@@ -38,11 +38,13 @@ Belle, 2011, eq 2.18). A 95 per cent confidence interval, for example,
 extends to 1.39 times the standard error around the mean and not 1.96.
 }
 \examples{
+\dontrun{
 data(aggdata)
 index <- id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
 levels = c("MSOA","LAD","RGN"))
 ci <- confint(index)
 catplot(ci)
+}
 }
 \seealso{
 \code{\link{catplot}} \code{\link{id}} \code{\link[lme4]{ranef}}
