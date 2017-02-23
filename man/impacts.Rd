@@ -74,8 +74,8 @@ greatest. However, to look at scale effects, where the effect of each level
 function \code{\link{id}}.
 }
 \examples{
-data(ethnicities)
-impx <- impacts(ethnicities, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
+data(aggdata)
+impx <- impacts(aggdata, c("Bangladeshi", "WhiteBrit"), c("LAD","RGN"))
 head(impx)
 # sorted by impact score
 # For $RGN London has the greatest impact on the ID

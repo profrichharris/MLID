@@ -1,3 +1,7 @@
+## Resubmission
+This is a resubmission. In this version I have:
+* Changed the examples so they run faster
+
 ## Test environments
 * local Win 10 install, R 3.3.2
 * local MacOS Darwin, R 3.3.1

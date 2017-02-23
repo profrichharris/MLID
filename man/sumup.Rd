@@ -34,18 +34,20 @@ units, summing the population counts. Aggregating the data also can be used
 to explore how the index changes with the scale of analysis.
 }
 \examples{
+\dontrun{
 data(ethnicities)
 head(ethnicities)
 id(ethnicities, vars = c("Arab","Other","Persons"), expected = TRUE)
 # the expected value is very high relative to the ID
-
 aggdata <- sumup(ethnicities, sumby = "LSOA", drop = "OA")
 head(aggdata)
 id(aggdata, vars=c("Arab","Other","Persons"), expected = TRUE)
 # Note the sensitivity of the ID to the scale of analysis
-
-aggdata <- sumup(ethnicities, sumby = "MSOA", drop = "LSOA")
-id(aggdata, vars=c("Arab","Other","Persons"), expected = TRUE)
+}
+data(aggdata)
+head(aggdata)
+moreagg <- sumup(ethnicities, sumby = "MSOA", drop = "LSOA")
+head(moreagg)
 }
 \seealso{
 \code{\link{id}}
