@@ -98,9 +98,10 @@
 #' expected = TRUE)
 #' # The expected value is a high percentage of the actual value so
 #' # aggregate it into a higher level geography...
+#' aggdata <- sumup(ethnicities, sumby = "LSOA", drop = "OA")
+#' head(aggdata)
 #'
 #' # Multilevel models
-#' data(aggdata)
 #' id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
 #' levels = c("MSOA","LAD","RGN"))
 #' id(aggdata, vars = c("Bangladeshi", "WhiteBrit"),
