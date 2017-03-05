@@ -86,7 +86,8 @@ impacts <- function(data, vars, levels, omit = NULL) {
 
   id <- .idx(data, vars)
   rr <- residuals(id)
-  se <- sigma(attr(id, "ols"))
+  ols <- attr(id, "ols")
+  se <- sqrt(sum(residuals(ols)^2) / ols$df.residual)
 
   levels <- as.list(levels)
   impx <- lapply(levels, .impact.calcs, data, rr, se, vars)

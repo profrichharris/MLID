@@ -3,7 +3,7 @@ importFrom("grDevices", "colorRampPalette")
 importFrom("graphics", "abline", "arrows", "axis", "par", "plot","text")
 importFrom("methods", "slot")
 importFrom("stats", "lm", "median", "qnorm", "quantile", "rbinom",
-             "residuals", "rstandard", "rstudent", "sd", "sigma")
+             "residuals", "rstandard", "rstudent", "sd")
 importFrom("utils", "tail", "head")
 importFrom("utils", "install.packages")
 S3method(confint, index)

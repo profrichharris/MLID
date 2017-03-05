@@ -47,18 +47,19 @@ confint.index <- function(object, parm, level = 0.95, ...) {
   zz <- qnorm(zz) * sqrt(2) / 2
 
   lvls <- 1:length(attr(object, "levels"))
-  sigm <- sigma(attr(object, "ols"))
+  ols <- attr(object, "ols")
+  sigm <- sqrt(sum(residuals(ols)^2) / ols$df.residual)
   vr <- attr(object, "variance")
 
   cint <- lapply(lvls, function(x,
                                 v = vv,
-                                sigma = sigm,
+                                sgm = sigm,
                                 z = zz, vrc = vr) {
     se = sqrt(attr(v[[x]], "postVar")[1, ,])
     mn = v[[x]][, 1]
     upr <- mn + z * se
     lwr <- mn - z * se
-    df <- data.frame(mn, lwr, upr) / sigma
+    df <- data.frame(mn, lwr, upr) / sgm
     rownames(df) <- rownames(v[[x]])
     df <- round(df, 3)
     attr(df, "level") <- names(v)[x]

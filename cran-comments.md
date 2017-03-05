@@ -1,6 +1,6 @@
 ## Resubmission
-This is a resubmission. In this version I have:
-* Changed the examples so they run faster
+Re. e-mail from Uwe Ligges, March 5th:
+I have revised the code slightly so not to call on funtion sigma
 
 ## Test environments
 * local Win 10 install, R 3.3.2
