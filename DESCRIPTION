@@ -6,7 +6,7 @@ Author: Richard Harris [aut],
   Dewi Owen [ctb]
 Maintainer: Richard Harris <rich.harris@bris.ac.uk>
 Description: Tools and functions to fit a multilevel index of dissimilarity.
-Depends: Depends: R (>= 3.3.0)
+Depends: R (>= 3.3.0)
 URL: https://github.com/profrichharris/MLID
 BugReports: https://github.com/profrichharris/MLID/issues
 License: GPL-3
