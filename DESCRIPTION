@@ -1,7 +1,7 @@
 Package: MLID
 Type: Package
 Title: Multilevel Index of Dissimilarity
-Version: 1.0.1
+Version: 1.0.2.9000
 Author: Richard Harris [aut],
   Dewi Owen [ctb]
 Maintainer: Richard Harris <rich.harris@bris.ac.uk>

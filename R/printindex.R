@@ -7,10 +7,10 @@
 #' @seealso \code{\link{id}} \code{\link{holdback}}
 
 print.index <- function(x, ...) {
-  cat(paste(attr(x, "vars")[1:2], collapse=" ~ "),"\n")
-  cat("ID:\t", round(x[1], 3), "\n", sep = "")
-  if(length(x) == 1) cat("E(ID):\t(not calculated)\n", sep = "")
-  if(length(x) == 2) cat("E(ID):\t", round(x[2], 3), " (",
+  cat(paste(attr(x, "vars"), collapse=" ~ "),"\n")
+  cat("ID:    ", round(x[1], 3), "\n", sep = "")
+  if(length(x) == 1) cat("E(ID): (not calculated)\n", sep = "")
+  if(length(x) == 2) cat("E(ID): ", round(x[2], 3), " (",
                          round(x[2]/x[1]*100, 1), "%)\n", sep = "")
   cat("\n")
   if (!is.null(attr(x, "variance"))) {
