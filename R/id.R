@@ -144,6 +144,7 @@ id <- function(data, vars, levels = NA, expected = FALSE,
   if (expected) {
     if (length(vars) == 3) {
       N <- data[, vars[3]]
+      vars <- vars[1:2]
     } else {
       N <- X + Y
       warning("Calculated the expected value but the total population of each

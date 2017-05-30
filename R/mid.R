@@ -3,7 +3,7 @@
 ## also the holdback scores
 
 
-.mid <- function(data, vars = c(1, 2), levels, expected = FALSE, nsims = 100) {
+.mid <- function(data, vars, levels, expected = FALSE, nsims = 100) {
   if (is.character((levels))) {
     ifelse (all(levels %in% names(data)), levels <- match(levels, names(data)),
             stop("Higher level grouping variable not found"))
