@@ -17,6 +17,7 @@
   df <- attr(id, "data")
   lvls <- names(data)[levels]
   data <- data.frame(y = data[, vars[1]], x = data[, vars[2]], data[, levels])
+  names(data) <- c("y", "x", lvls)
   data$y <- data$y / sum(data$y)
   data$x <- data$x / sum(data$x)
   f <- "y ~ 0"
@@ -88,7 +89,7 @@ holdback <- function(mlm) {
   ID <- sum(abs(rwsm))
   for(i in 1:k) {
 
-    rwsm <- rowSums(rvals[,-i])
+    ifelse(k > 2, rwsm <- rowSums(rvals[,-i]), rwsm <- rvals[,-i])
     hb[i] <-  sum(abs(rwsm))/ID - 1
 
   }
